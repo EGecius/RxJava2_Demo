@@ -12,7 +12,7 @@ import io.reactivex.functions.Function;
 public class FlatMapExamples {
 
 	/** Takes list & slices it into its elements */
-	public Observable<String> flatmap(final List<String> list) {
+	public Observable<String> flatMap(final List<String> list) {
 		return Observable.just(list)
 				.flatMap(new Function<List<String>, ObservableSource<String>>() {
 					@Override
@@ -24,7 +24,7 @@ public class FlatMapExamples {
 				});
 	}
 
-	/** Takes list & slices it into its elements. Same effect as using flatmap above */
+	/** Takes list & slices it into its elements. Same effect as using {@link #flatMap(List)}} */
 	public Observable<String> fromIterable(final List<String> list) {
 		return Observable.fromIterable(list);
 	}

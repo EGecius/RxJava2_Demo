@@ -24,24 +24,11 @@ public class FlatMapExamplesTest {
 		add("two");
 	}};
 
-
 	@Before
 	public void setup() {
 		mSut = new FlatMapExamples();
 	}
 
-	@Test
-	public void flatmaps() {
-		TestObserver<String> testObserver = mSut.flatmap(list0to2).test();
-
-		testObserver.assertNoErrors();
-		testObserver.assertComplete();
-		List<String> values = testObserver.values();
-		assertThat(values.size()).isEqualTo(3);
-		assertThat(values.get(0)).isEqualTo("zero");
-		assertThat(values.get(1)).isEqualTo("one");
-		assertThat(values.get(2)).isEqualTo("two");
-	}
 
 	@Test
 	public void fromIterable() {
@@ -67,6 +54,21 @@ public class FlatMapExamplesTest {
 		assertThat(values.get(0)).isEqualTo("69");
 	}
 
+	/* DEMOS DIFFERENT ONE-TO-? RELATIONSHIPS*/
+
+	@Test
+	public void flatMapOneToMany() {
+		TestObserver<String> testObserver = mSut.flatMap(list0to2).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.size()).isEqualTo(3);
+		assertThat(values.get(0)).isEqualTo("zero");
+		assertThat(values.get(1)).isEqualTo("one");
+		assertThat(values.get(2)).isEqualTo("two");
+	}
+
 	@Test
 	public void flatMapOneToOne() {
 		TestObserver<String> testObserver = mSut.flatMapOneToOne(69).test();
@@ -75,5 +77,6 @@ public class FlatMapExamplesTest {
 		testObserver.assertComplete();
 		testObserver.assertValues("69");
 	}
+
 
 }
