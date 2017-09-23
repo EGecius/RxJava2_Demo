@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @RunWith(MockitoJUnitRunner.class)
 public class MapExamplesTest {
 
-	MapExamples mSut;
+	private MapExamples mSut;
 
 	@Before
 	public void setup() {
