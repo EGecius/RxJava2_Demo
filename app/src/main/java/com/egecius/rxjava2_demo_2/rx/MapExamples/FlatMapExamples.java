@@ -1,5 +1,6 @@
 package com.egecius.rxjava2_demo_2.rx.MapExamples;
 
+import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -47,6 +48,39 @@ public class FlatMapExamples {
 					public Observable<String> apply(@NonNull final Integer integer) throws
 							Exception {
 						return Observable.just(String.valueOf(integer));
+					}
+				});
+	}
+
+	public Observable<String> flatMapOneToNone(final Integer integer) {
+		return Observable.just(integer)
+				.flatMap(new Function<Integer, Observable<String>>() {
+					@Override
+					public Observable<String> apply(@NonNull final Integer integer) throws
+							Exception {
+						return Observable.empty();
+					}
+				});
+	}
+
+	public Observable<Integer> flatMapOneToSometimes(Integer... integers) {
+		List<Integer> list = Arrays.asList(integers);
+
+		return Observable.fromIterable(list)
+				.flatMap(new Function<Integer, Observable<Integer>>() {
+					@Override
+					public Observable<Integer> apply(@NonNull final Integer integer) throws
+							Exception {
+
+						if (isEven(integer)) {
+							return Observable.empty();
+						} else {
+							return Observable.just(integer);
+						}
+					}
+
+					private boolean isEven(final @NonNull Integer integer) {
+						return integer % 2 == 0;
 					}
 				});
 	}

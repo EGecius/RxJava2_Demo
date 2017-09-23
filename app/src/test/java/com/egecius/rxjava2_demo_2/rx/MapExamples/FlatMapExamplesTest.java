@@ -78,5 +78,22 @@ public class FlatMapExamplesTest {
 		testObserver.assertValues("69");
 	}
 
+	@Test
+	public void flatMapOneToNone() {
+		TestObserver<String> testObserver = mSut.flatMapOneToNone(69).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		testObserver.assertNoValues();
+	}
+
+	@Test
+	public void flatMapOneToSometimes() {
+		TestObserver<Integer> testObserver = mSut.flatMapOneToSometimes(0, 1, 2, 3, 4, 5).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		testObserver.assertValues(1, 3, 5);
+	}
 
 }
