@@ -26,41 +26,16 @@ public class MapExamples {
 		return stringBuilder.toString();
 	}
 
-	/** Takes list & slices it into its elements */
-	public Observable<String> flatmap(final List<String> list) {
-		return Observable.just(list)
-				.flatMap(new Function<List<String>, ObservableSource<String>>() {
-					@Override
-					public ObservableSource<String> apply(@NonNull final List<String> strings)
-							throws
-							Exception {
-						return Observable.fromIterable(strings);
-					}
-				});
-	}
-
-	/** Takes list & slices it into its elements. Same effect as using flatmap above */
-	public Observable<String> fromIterable(final List<String> list) {
-		return Observable.fromIterable(list);
-	}
-
-	public Single<String> flatmapOnSingle(final Integer integerOuter) {
-		return Single.just(integerOuter)
-				.flatMap(new Function<Integer, SingleSource<String>>() {
-					@Override
-					public SingleSource<String> apply(@NonNull final Integer integerInner) throws
-							Exception {
-						return Single.just(String.valueOf(integerInner));
-					}
-				});
-	}
-
 	/** Achieves same as above but only with much simpler map() */
 	public Single<String> mapOnSingle(final Integer integerOuter) {
 		return Single.just(integerOuter)
 				.map(String::valueOf);
 	}
 
+	/** How does the stream terminate if null value occurs in stream?
+	 First, it emits null value, then it throws NullPointerException and terminates stream with
+	 onError.
+	 */
 	public Single<String> mapToNull(final Integer integer) {
 		return Single.just(integer)
 				.map(new Function<Integer, String>() {

@@ -12,9 +12,6 @@ import io.reactivex.observers.TestObserver;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * Tests for {@link MapExamples}
- */
 @RunWith(MockitoJUnitRunner.class)
 public class MapExamplesTest {
 
@@ -41,43 +38,6 @@ public class MapExamplesTest {
 		List<String> values = testObserver.values();
 		assertThat(values.size()).isEqualTo(1);
 		assertThat(values.get(0)).isEqualTo("zeroonetwo");
-	}
-
-	@Test
-	public void flatmaps() {
-		TestObserver<String> testObserver = mSut.flatmap(list0to2).test();
-
-		testObserver.assertNoErrors();
-		testObserver.assertComplete();
-		List<String> values = testObserver.values();
-		assertThat(values.size()).isEqualTo(3);
-		assertThat(values.get(0)).isEqualTo("zero");
-		assertThat(values.get(1)).isEqualTo("one");
-		assertThat(values.get(2)).isEqualTo("two");
-	}
-
-	@Test
-	public void fromIterable() {
-		TestObserver<String> testObserver = mSut.fromIterable(list0to2).test();
-
-		testObserver.assertNoErrors();
-		testObserver.assertComplete();
-		List<String> values = testObserver.values();
-		assertThat(values.size()).isEqualTo(3);
-		assertThat(values.get(0)).isEqualTo("zero");
-		assertThat(values.get(1)).isEqualTo("one");
-		assertThat(values.get(2)).isEqualTo("two");
-	}
-
-	@Test
-	public void flatmaps_onSingle() {
-		TestObserver<String> testObserver = mSut.flatmapOnSingle(69).test();
-
-		testObserver.assertNoErrors();
-		testObserver.assertComplete();
-		List<String> values = testObserver.values();
-		assertThat(values.size()).isEqualTo(1);
-		assertThat(values.get(0)).isEqualTo("69");
 	}
 
 	@Test
