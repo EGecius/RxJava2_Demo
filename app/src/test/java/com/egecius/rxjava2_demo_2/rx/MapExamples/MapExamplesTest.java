@@ -19,6 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MapExamplesTest {
 
 	private MapExamples mSut;
+	private List<String> list0to2 = new ArrayList<String>() {{
+		add("zero");
+		add("one");
+		add("two");
+	}};
+
 
 	@Before
 	public void setup() {
@@ -27,19 +33,40 @@ public class MapExamplesTest {
 
 	@Test
 	public void concatenatesWithMap() {
-		List<String> list = new ArrayList<String>() {{
-			add("one");
-			add("two");
-			add("three");
-		}};
 
-		TestObserver<String> testObserver = mSut.concatenate(list).test();
+		TestObserver<String> testObserver = mSut.concatenate(list0to2).test();
 
 		testObserver.assertNoErrors();
 		testObserver.assertComplete();
 		List<String> values = testObserver.values();
 		assertThat(values.size()).isEqualTo(1);
-		assertThat(values.get(0)).isEqualTo("onetwothree");
+		assertThat(values.get(0)).isEqualTo("zeroonetwo");
+	}
+
+	@Test
+	public void flatmaps() {
+		TestObserver<String> testObserver = mSut.flatmap(list0to2).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.size()).isEqualTo(3);
+		assertThat(values.get(0)).isEqualTo("zero");
+		assertThat(values.get(1)).isEqualTo("one");
+		assertThat(values.get(2)).isEqualTo("two");
+	}
+
+	@Test
+	public void fromIterable() {
+		TestObserver<String> testObserver = mSut.fromIterable(list0to2).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.size()).isEqualTo(3);
+		assertThat(values.get(0)).isEqualTo("zero");
+		assertThat(values.get(1)).isEqualTo("one");
+		assertThat(values.get(2)).isEqualTo("two");
 	}
 
 }
