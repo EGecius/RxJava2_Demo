@@ -67,4 +67,13 @@ public class FlatMapExamplesTest {
 		assertThat(values.get(0)).isEqualTo("69");
 	}
 
+	@Test
+	public void flatMapOneToOne() {
+		TestObserver<String> testObserver = mSut.flatMapOneToOne(69).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		testObserver.assertValues("69");
+	}
+
 }

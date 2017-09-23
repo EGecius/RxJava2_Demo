@@ -40,4 +40,14 @@ public class FlatMapExamples {
 				});
 	}
 
+	public Observable<String> flatMapOneToOne(final Integer integer) {
+		return Observable.just(integer)
+				.flatMap(new Function<Integer, Observable<String>>() {
+					@Override
+					public Observable<String> apply(@NonNull final Integer integer) throws
+							Exception {
+						return Observable.just(String.valueOf(integer));
+					}
+				});
+	}
 }
