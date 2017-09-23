@@ -96,4 +96,16 @@ public class FlatMapExamplesTest {
 		testObserver.assertValues(1, 3, 5);
 	}
 
+	/* flatMapToObservable */
+
+	@Test
+	public void singleFlatMapObservable() {
+		TestObserver<Integer> testObserver = mSut.singleFlatMapObservable(1, 2, 3, 4).test();
+
+		testObserver.assertValues(1, 2, 3, 4);
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+	}
+
 }

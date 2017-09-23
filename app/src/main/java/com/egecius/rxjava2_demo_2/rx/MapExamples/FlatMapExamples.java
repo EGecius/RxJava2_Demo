@@ -84,4 +84,20 @@ public class FlatMapExamples {
 					}
 				});
 	}
+
+	public Observable<Integer> singleFlatMapObservable(final Integer... integers) {
+
+		List<Integer> list = Arrays.asList(integers);
+
+		return Single.just(list)
+				.flatMapObservable(new Function<List<Integer>, ObservableSource<Integer>>() {
+
+
+					@Override
+					public ObservableSource<Integer> apply(@NonNull final List<Integer>
+							                                                integers) throws Exception {
+						return Observable.fromIterable(integers);
+					}
+				});
+	}
 }
