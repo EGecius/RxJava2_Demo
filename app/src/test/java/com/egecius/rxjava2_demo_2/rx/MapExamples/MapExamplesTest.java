@@ -69,4 +69,36 @@ public class MapExamplesTest {
 		assertThat(values.get(2)).isEqualTo("two");
 	}
 
+	@Test
+	public void flatmaps_onSingle() {
+		TestObserver<String> testObserver = mSut.flatmapOnSingle(69).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.size()).isEqualTo(1);
+		assertThat(values.get(0)).isEqualTo("69");
+	}
+
+	@Test
+	public void maps_onSingle() {
+		TestObserver<String> testObserver = mSut.mapOnSingle(69).test();
+
+		testObserver.assertNoErrors();
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.size()).isEqualTo(1);
+		assertThat(values.get(0)).isEqualTo("69");
+	}
+
+	@Test
+	public void mapFailsWhenEmitsNull() {
+		TestObserver<String> testObserver = mSut.mapToNull(69).test();
+
+		testObserver.assertComplete();
+		List<String> values = testObserver.values();
+		assertThat(values.get(0)).isNull();
+		testObserver.assertError(NullPointerException.class);
+	}
+
 }
