@@ -5,12 +5,15 @@ import java.util.List;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Single;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
 
 public class CreateExamples {
 
 	private boolean isCalledDoOnDispose;
+	private boolean isCalledDoOnComplete;
+	private ObservableEmitter<Integer> emitter;
 
 	public Observable<Integer> createObservable(final List<Integer> list) {
 		return Observable.create(new ObservableOnSubscribe<Integer>() {
@@ -38,5 +41,24 @@ public class CreateExamples {
 		for (final Integer integer : list) {
 			emitter.onNext(integer);
 		}
+	}
+
+	public boolean isCalledDoOnComplete() {
+		return false;
+	}
+
+	public Observable<Integer> doOnComplete(final List<Integer> list) {
+		Observable<Integer> observable = Observable.create(emitter -> {
+			this.emitter = emitter;
+			emitList(list, emitter);
+			// intentionally not calling onComplete to call emitter subscribed to
+		});
+		return observable.doOnComplete(() -> {
+			isCalledDoOnComplete = true;
+		});
+	}
+
+	public void callOnComplete() {
+		emitter.onComplete();
 	}
 }

@@ -48,5 +48,27 @@ public class CreateExamplesTest {
 		assertThat(mSut.isCalledDoOnDispose()).isTrue();
 	}
 
+	/* is OnComplete called when we dispose Observable? */
+
+	@Test
+	public void doOnComplete_notCalledOnDispose() {
+		List<Integer> list = Arrays.asList(3, 2, 1);
+		Disposable disposable = mSut.doOnComplete(list).subscribe();
+
+		disposable.dispose();
+
+		assertThat(mSut.isCalledDoOnComplete()).isFalse();
+	}
+
+	@Test
+	public void doOnComplete_calledOnComplete() {
+		List<Integer> list = Arrays.asList(3, 2, 1);
+		mSut.doOnComplete(list).subscribe();
+		assertThat(mSut.isCalledDoOnComplete()).isFalse();
+
+		mSut.callOnComplete();
+
+		assertThat(mSut.isCalledDoOnComplete()).isTrue();
+	}
 
 }
