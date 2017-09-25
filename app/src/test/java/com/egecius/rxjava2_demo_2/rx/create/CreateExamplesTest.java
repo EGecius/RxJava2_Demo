@@ -9,7 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.TestObserver;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CreateExamplesTest {
@@ -33,5 +36,17 @@ public class CreateExamplesTest {
 				.assertNoErrors()
 				.assertValues(3, 2, 1);
 	}
+
+	@Test
+	public void doOnDispose() {
+		List<Integer> list = Arrays.asList(3, 2, 1);
+		Disposable disposable = mSut.doOnDispose(list).subscribe();
+		assertThat(mSut.isCalledDoOnDispose()).isFalse();
+
+		disposable.dispose();
+
+		assertThat(mSut.isCalledDoOnDispose()).isTrue();
+	}
+
 
 }
