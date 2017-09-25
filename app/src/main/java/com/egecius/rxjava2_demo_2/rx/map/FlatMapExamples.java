@@ -1,4 +1,4 @@
-package com.egecius.rxjava2_demo_2.rx.MapExamples;
+package com.egecius.rxjava2_demo_2.rx.map;
 
 import java.util.Arrays;
 import java.util.List;

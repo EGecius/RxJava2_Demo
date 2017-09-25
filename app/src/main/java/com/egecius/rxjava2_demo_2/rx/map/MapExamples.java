@@ -1,11 +1,9 @@
-package com.egecius.rxjava2_demo_2.rx.MapExamples;
+package com.egecius.rxjava2_demo_2.rx.map;
 
 import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
