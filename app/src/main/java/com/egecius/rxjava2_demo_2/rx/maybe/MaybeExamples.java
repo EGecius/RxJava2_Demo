@@ -2,20 +2,30 @@ package com.egecius.rxjava2_demo_2.rx.maybe;
 
 import android.support.annotation.Nullable;
 
+import io.reactivex.Completable;
+import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
+import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
 
 public class MaybeExamples {
 
-	public Single<Integer> maybeToSingle(Integer param) {
+    public boolean isFlatMapCompletableExecuted;
 
-		return Maybe.just(param)
-				.filter(integer -> integer < 5)
-				.toSingle();
-	}
+    public Single<Integer> maybeToSingle(Integer param) {
 
-	/** defaultIfEmpty() surprisingly returns Empty, even though it could return Single, since it
-     * won't be empty now. */
+        return Maybe.just(param)
+                .filter(integer -> integer < 5)
+                .toSingle();
+    }
+
+    /**
+     * defaultIfEmpty() surprisingly returns Empty, even though it could return Single, since it
+     * won't be empty now.
+     */
     public Single<Integer> defaultIfEmpty(@Nullable Integer param) {
 
         Maybe<Integer> maybe;
@@ -30,4 +40,17 @@ public class MaybeExamples {
                 .defaultIfEmpty(-1)
                 .toSingle();
     }
+
+    /** flatMapCompletable will not get executed if origin Maybe is empty */
+    public Completable maybeFlatMapCompletable(Iterable<Integer> integers) {
+        return Observable.fromIterable(integers)
+                .firstElement()
+                .flatMapCompletable(integer -> getCompletable());
+    }
+
+    private CompletableSource getCompletable() {
+        isFlatMapCompletableExecuted = true;
+        return Completable.complete();
+    }
+
 }

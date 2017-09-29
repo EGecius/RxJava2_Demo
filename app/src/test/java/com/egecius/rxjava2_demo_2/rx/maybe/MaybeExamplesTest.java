@@ -1,10 +1,14 @@
 package com.egecius.rxjava2_demo_2.rx.maybe;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 import io.reactivex.observers.TestObserver;
@@ -56,6 +60,24 @@ public class MaybeExamplesTest {
                 .assertNoErrors()
                 .assertComplete()
                 .assertValues(-1);
+    }
+
+    @Test
+    public void maybeFlatMapCompletable_withEmpty() {
+        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+
+        mSut.maybeFlatMapCompletable(Collections.EMPTY_LIST).test();
+
+        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+    }
+
+    @Test
+    public void maybeFlatMapCompletable_withNonEmpty() {
+        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+
+        mSut.maybeFlatMapCompletable(Arrays.asList(1)).test();
+
+        assertThat(mSut.isFlatMapCompletableExecuted).isTrue();
     }
 
 }
