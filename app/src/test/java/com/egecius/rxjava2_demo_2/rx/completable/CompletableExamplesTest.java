@@ -35,4 +35,19 @@ public class CompletableExamplesTest {
         assertThat(list.get(2)).isEqualTo(CompletableExamples.THIRD_COMPLETABLE);
     }
 
+    @Test
+    public void doOnCompleteAndThen() {
+        TestObserver<Void> testObserver = mSut.doOnCompleteAndThen().test();
+
+        testObserver
+                .assertComplete()
+                .assertNoErrors();
+        List<String> list = mSut.list;
+        assertThat(list.size()).isEqualTo(4);
+        assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+        assertThat(list.get(1)).isEqualTo(CompletableExamples.SECOND_COMPLETABLE);
+        assertThat(list.get(2)).isEqualTo(CompletableExamples.THIRD_COMPLETABLE);
+        assertThat(list.get(3)).isEqualTo(CompletableExamples.DO_ON_COMPLETE);
+    }
+
 }
