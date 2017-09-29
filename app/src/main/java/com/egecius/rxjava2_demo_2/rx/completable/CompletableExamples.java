@@ -2,7 +2,6 @@ package com.egecius.rxjava2_demo_2.rx.completable;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;

@@ -38,4 +38,24 @@ public class MaybeExamplesTest {
 				.assertError(NoSuchElementException.class);
 	}
 
+	@Test
+	public void defaultIfEmptyRetunrsExpectedValue() {
+        TestObserver<Integer> testObserver = mSut.defaultIfEmpty(5).test();
+
+        testObserver
+                .assertNoErrors()
+                .assertComplete()
+                .assertValues(5);
+	}
+
+    @Test
+    public void defaultIfEmptyReturnsDefaultValue() {
+        TestObserver<Integer> testObserver = mSut.defaultIfEmpty(null).test();
+
+        testObserver
+                .assertNoErrors()
+                .assertComplete()
+                .assertValues(-1);
+    }
+
 }
