@@ -2,6 +2,8 @@ package com.egecius.rxjava2_demo_2.rx.maybe;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static java.util.Arrays.asList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,9 +77,27 @@ public class MaybeExamplesTest {
     public void maybeFlatMapCompletable_withNonEmpty() {
         assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
 
-        mSut.maybeFlatMapCompletable(Arrays.asList(1)).test();
+        mSut.maybeFlatMapCompletable(asList(1)).test();
 
         assertThat(mSut.isFlatMapCompletableExecuted).isTrue();
+    }
+
+    @Test
+    public void maybeFlatMapCompletableAndThen_withEmpty() {
+        assertThat(mSut.isAndThenExecuted).isFalse();
+
+        mSut.maybeFlatMapCompletableAndThen(Collections.EMPTY_LIST).test();
+
+        assertThat(mSut.isAndThenExecuted).isFalse();
+    }
+
+    @Test
+    public void maybeFlatMapCompletableAndThen_withNonEmpty() {
+        assertThat(mSut.isAndThenExecuted).isFalse();
+
+        mSut.maybeFlatMapCompletableAndThen(asList(1)).test();
+
+        assertThat(mSut.isAndThenExecuted).isTrue();
     }
 
 }

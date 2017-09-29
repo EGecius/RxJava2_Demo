@@ -14,6 +14,7 @@ import io.reactivex.functions.Function;
 public class MaybeExamples {
 
     public boolean isFlatMapCompletableExecuted;
+    public boolean isAndThenExecuted;
 
     public Single<Integer> maybeToSingle(Integer param) {
 
@@ -50,6 +51,20 @@ public class MaybeExamples {
 
     private CompletableSource getCompletable() {
         isFlatMapCompletableExecuted = true;
+        return Completable.complete();
+    }
+
+    /** andThen() gets executed even if Function in flatMapCompletable() before it did not get
+     * executed  */
+    public Completable maybeFlatMapCompletableAndThen(Iterable<Integer> integers) {
+        return Observable.fromIterable(integers)
+                .firstElement()
+                .flatMapCompletable(integer -> getCompletable())
+                .andThen(myAndThen());
+    }
+
+    private CompletableSource myAndThen() {
+        isAndThenExecuted = true;
         return Completable.complete();
     }
 
