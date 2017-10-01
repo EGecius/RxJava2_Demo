@@ -16,15 +16,26 @@ import io.reactivex.functions.Consumer;
 @RunWith(MockitoJUnitRunner.class)
 public class ErrorExamplesTest {
 
-    // when error is emitted but onError does not get implemented, execution does not crash.
+    private void setCrashingUncaughtExceptionHandler() {
+        Thread.currentThread().setUncaughtExceptionHandler((thread, throwable) -> {
+            throw new IllegalStateException(throwable);
+        });
+    }
+
+    // when error is emitted but onError does not get implemented, execution does not crash on
+    // Desktop but crashes on more Strict Android
     //
-    // Instead:
+    // What happens is:
     // 1) exception is wrapped in OnErrorNotImplementedException and printed at the end of
     // 2) RxJavaPlugins.onError()
     // 3) passed to UncaughtExceptionHandler interface
+    // 4) which passes exception to current thread's UncaughtExceptionHandler. On desktop it
+    // does not crash app but on Android it does
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void Observable_Error() {
+        setCrashingUncaughtExceptionHandler();
+
         Observable<Object> observable = Observable.error(new RuntimeException());
 
         //intentionally do not implement onError to see if it will fail
@@ -36,7 +47,26 @@ public class ErrorExamplesTest {
     }
 
     @Test
+    public void Observable_Error_doesNotFailWhenOnErrorImplemented() {
+        setCrashingUncaughtExceptionHandler();
+
+        Observable<Object> observable = Observable.error(new RuntimeException());
+
+        //intentionally do not implement onError to see if it will fail
+        observable.subscribe(o -> {
+            //nothing
+        }, throwable -> {
+            //implements onError
+        });
+
+        // if execution has not failed by this point, test has passed
+    }
+
+
+    @Test(expected = RuntimeException.class)
     public void Single_Error() {
+        setCrashingUncaughtExceptionHandler();
+
         Single<Object> single = Single.error(new RuntimeException());
 
         //intentionally do not implement onError to see if it will fail
@@ -48,8 +78,10 @@ public class ErrorExamplesTest {
     }
 
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void Completable_Error() {
+        setCrashingUncaughtExceptionHandler();
+
         Completable completable = Completable.error(new RuntimeException());
 
         //intentionally do not implement onError to see if it will fail
@@ -63,8 +95,10 @@ public class ErrorExamplesTest {
         // if execution has not failed by this point, test has passed
     }
 
-    @Test
+    @Test(expected = RuntimeException.class)
     public void Maybe_Error() {
+        setCrashingUncaughtExceptionHandler();
+
         Maybe maybe = Maybe.error(new RuntimeException());
 
         //intentionally do not implement onError to see if it will fail

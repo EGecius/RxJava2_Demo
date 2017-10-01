@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-        emitErrorWithoutOnErrorHandling();
+//        emitErrorWithoutOnErrorHandling();
     }
 
     /** This will crash the app because rxJava 2 not only prints the stracktrace but also
