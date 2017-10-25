@@ -9,10 +9,17 @@ import io.reactivex.functions.Action;
 
 public class CompletableExamples {
 
+
+    enum Path {
+        A, B
+    }
+
     public static final String FIRST_COMPLETABLE = "first_completable";
     public static final String SECOND_COMPLETABLE = "second_completable";
     public static final String THIRD_COMPLETABLE = "third_completable";
     public static final String DO_ON_COMPLETE = "doOnComplete";
+    public static final String PATH_A_COMPLETABLE = "PATH_A_COMPLETABLE";
+    public static final String PATH_B_COMPLETABLE = "PATH_B_COMPLETABLE";
 
     List<String> list = new ArrayList<>();
 
@@ -47,6 +54,30 @@ public class CompletableExamples {
 
     private Action myDoOnComplete() {
         return () -> list.add(DO_ON_COMPLETE);
+    }
+
+
+    Completable divergingPaths(Path path) {
+        return firstCompletable()
+                .andThen(secondCompletable())
+                .andThen(executePath(path));
+    }
+
+    private CompletableSource executePath(Path path) {
+        if (path == Path.A) {
+            return pathACompletable();
+        }
+        return pathBCompletable();
+    }
+
+    private Completable pathACompletable() {
+        list.add(PATH_A_COMPLETABLE);
+        return Completable.complete();
+    }
+
+    private Completable pathBCompletable() {
+        list.add(PATH_B_COMPLETABLE);
+        return Completable.complete();
     }
 
 }
