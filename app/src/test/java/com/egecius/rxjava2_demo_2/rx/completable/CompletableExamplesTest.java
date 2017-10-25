@@ -78,4 +78,32 @@ public class CompletableExamplesTest {
         assertThat(list.get(2)).isEqualTo(CompletableExamples.PATH_B_COMPLETABLE);
     }
 
+    @Test
+    public void divergingPathWithMaybeA() {
+        TestObserver<Void> testObserver = mSut.divergingPathWithMaybeA().test();
+
+        testObserver
+                .assertComplete()
+                .assertNoErrors();
+        List<String> list = mSut.list;
+        assertThat(list.size()).isEqualTo(3);
+        assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+        assertThat(list.get(1)).isEqualTo(CompletableExamples.SECOND_COMPLETABLE);
+        assertThat(list.get(2)).isEqualTo(CompletableExamples.PATH_A_COMPLETABLE);
+    }
+
+    @Test
+    public void divergingPathWithMaybeB() {
+        TestObserver<Void> testObserver = mSut.divergingPathWithMaybeB().test();
+
+        testObserver
+                .assertComplete()
+                .assertNoErrors();
+        List<String> list = mSut.list;
+        assertThat(list.size()).isEqualTo(3);
+        assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+        assertThat(list.get(1)).isEqualTo(CompletableExamples.SECOND_COMPLETABLE);
+        assertThat(list.get(2)).isEqualTo(CompletableExamples.PATH_B_COMPLETABLE);
+    }
+
 }

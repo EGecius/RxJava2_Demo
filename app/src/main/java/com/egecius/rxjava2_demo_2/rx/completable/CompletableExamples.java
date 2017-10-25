@@ -5,10 +5,10 @@ import java.util.List;
 
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
+import io.reactivex.Maybe;
 import io.reactivex.functions.Action;
 
 public class CompletableExamples {
-
 
     enum Path {
         A, B
@@ -78,6 +78,28 @@ public class CompletableExamples {
     private Completable pathBCompletable() {
         list.add(PATH_B_COMPLETABLE);
         return Completable.complete();
+    }
+
+    Completable divergingPathWithMaybeA() {
+        return firstCompletable()
+                .andThen(secondCompletable())
+                .andThen(getMaybeA())
+                .flatMapCompletable(this::executePath);
+    }
+
+    private Maybe<Path> getMaybeA() {
+        return Maybe.just(Path.A);
+    }
+
+    Completable divergingPathWithMaybeB() {
+        return firstCompletable()
+                .andThen(secondCompletable())
+                .andThen(getMaybeB())
+                .flatMapCompletable(this::executePath);
+    }
+
+    private Maybe<Path> getMaybeB() {
+        return Maybe.just(Path.B);
     }
 
 }
