@@ -36,8 +36,18 @@ public class RetryExamples {
                         // further logic of
                         // 1) how many times we should retry
                         // 2) whether to add delay
-                        return Flowable.range(1, retryCount);
+                        return Flowable.range(1, retryCount + 1);
                     }
                 });
+    }
+
+    Single<Integer> retryTimes(int retryCount) {
+        return Single.create(new SingleOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Integer> emitter) throws Exception {
+                subscribeCalled++;
+                emitter.onError(new Exception());
+            }
+        }).retry(retryCount);
     }
 }

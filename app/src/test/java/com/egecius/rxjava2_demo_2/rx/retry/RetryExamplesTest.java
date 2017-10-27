@@ -21,7 +21,14 @@ public class RetryExamplesTest {
     public void retryWhen() {
         mSut.retryWhenTimes(5).test();
 
-        assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+    }
+
+    @Test
+    public void retry() {
+        mSut.retryTimes(5).test();
+
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
     }
 
 
