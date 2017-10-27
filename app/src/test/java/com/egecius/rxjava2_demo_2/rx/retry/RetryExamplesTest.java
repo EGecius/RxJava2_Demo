@@ -31,6 +31,15 @@ public class RetryExamplesTest {
         assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
     }
 
+    @Test
+    public void retryWhen_withZip() {
+
+        mSut.retryWhenWithZipTimes(5).test();
+
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+
+    }
+
 
 
 }
