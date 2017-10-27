@@ -30,7 +30,6 @@ public class ErrorExamplesTest {
                 .assertNotComplete()
                 .assertNoValues()
                 .assertError(EXCEPTION);
-
     }
 
 }
