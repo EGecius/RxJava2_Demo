@@ -9,25 +9,34 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
-// TODO: 27/10/2017 to be fixed 
 public class RetryExamples {
 
-    int subscribeCalled;
+    private int subscribeCalled;
 
-    Single<Integer> retryWhen_retries5Tmes() {
+    public int getSubscribeCalled() {
+        return subscribeCalled;
+    }
+
+    /** retryWhen resubscribes to original source when Publisher (returned by Function) signals a
+     *  value   */
+    Single<Integer> retryWhenTimes(int retryCount) {
 
         return Single.create(new SingleOnSubscribe<Integer>() {
             @Override
             public void subscribe(@NonNull SingleEmitter<Integer> emitter) throws Exception {
                 subscribeCalled++;
-                emitter.onSuccess(0);
+                emitter.onError(new Exception());
             }
         })
                 .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
                     @Override
                     public Publisher<?> apply(@NonNull Flowable<Throwable> throwableFlowable)
                             throws Exception {
-                        return Flowable.range(1, 5);
+                        // throwableFlowable is a stream of exceptions, which we can use for
+                        // further logic of
+                        // 1) how many times we should retry
+                        // 2) whether to add delay
+                        return Flowable.range(1, retryCount);
                     }
                 });
     }

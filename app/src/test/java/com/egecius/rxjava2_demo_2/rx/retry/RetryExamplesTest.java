@@ -18,10 +18,12 @@ public class RetryExamplesTest {
     }
 
     @Test
-    public void _() {
-        mSut.retryWhen_retries5Tmes().test();
+    public void retryWhen() {
+        mSut.retryWhenTimes(5).test();
 
-        assertThat(mSut.subscribeCalled).isEqualTo(5);
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
     }
+
+
 
 }
