@@ -106,4 +106,17 @@ public class CompletableExamplesTest {
         assertThat(list.get(2)).isEqualTo(CompletableExamples.PATH_B_COMPLETABLE);
     }
 
+    @Test
+    public void andThenWithErrors() {
+        TestObserver<Void> testObserver = mSut.andThenWithErrors().test();
+
+        testObserver
+                .assertNotComplete()
+                .assertNoValues()
+                .assertError(CompletableExamples.ERROR_1);
+        List<String> list = mSut.list;
+        assertThat(list.size()).isEqualTo(3);
+        assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+    }
+
 }

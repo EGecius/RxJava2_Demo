@@ -10,6 +10,9 @@ import io.reactivex.functions.Action;
 
 public class CompletableExamples {
 
+    public static final Exception ERROR_1 = new Exception("ERROR_1");
+    public static final Throwable ERROR_2 = new Exception("ERROR_2");
+
     enum Path {
         A, B
     }
@@ -100,6 +103,14 @@ public class CompletableExamples {
 
     private Maybe<Path> getMaybeB() {
         return Maybe.just(Path.B);
+    }
+
+    Completable andThenWithErrors() {
+        return firstCompletable()
+                .andThen(Completable.error(ERROR_1))
+                .andThen(secondCompletable())
+                .andThen(Completable.error(ERROR_2))
+                .andThen(thirdCompletable());
     }
 
 }
