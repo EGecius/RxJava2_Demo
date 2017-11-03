@@ -58,4 +58,15 @@ public class SubjectsExamplesTest {
                 .assertValues(2, 3);
     }
 
+    @Test
+    public void createWithTime() throws InterruptedException {
+        ReplaySubject<String> subject = mSut.createWithTime();
+
+        TestObserver<String> testObserver = subject.test();
+
+        testObserver
+                .assertNoErrors()
+                .assertValues("two", "three");
+    }
+
 }
