@@ -21,6 +21,18 @@ public class SubjectsExamplesTest {
     }
 
     @Test
+    public void subscribeToDefault() {
+        ReplaySubject<Integer> subject = mSut.defaultReplaySubject(asList(11, 12, 13));
+
+        TestObserver<Integer> testObserver = subject.test();
+
+        testObserver
+                .assertComplete()
+                .assertNoErrors()
+                .assertValues(11, 12, 13);
+    }
+
+    @Test
     public void sizedReplaySubjectEmitsLimitedNumberOfValues() {
         ReplaySubject<Integer> subject = mSut.createWithSize2(asList(1, 2, 3),
                 (asList(11, 12, 13)));

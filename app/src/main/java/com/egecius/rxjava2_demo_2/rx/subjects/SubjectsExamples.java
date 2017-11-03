@@ -7,7 +7,16 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.ReplaySubject;
 
-public class SubjectsExamples {
+class SubjectsExamples {
+
+    ReplaySubject<Integer> defaultReplaySubject(List<Integer> list) {
+
+        Observable<Integer> observable = Observable.fromIterable(list);
+        ReplaySubject<Integer> subject = ReplaySubject.create();
+        observable.subscribe(subject);
+
+        return subject;
+    }
 
     /** Returned subject limits its cash to 2 */
     ReplaySubject<Integer> createWithSize2(List<Integer> list1, List<Integer> list2) {
