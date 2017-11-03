@@ -1,13 +1,14 @@
 package com.egecius.rxjava2_demo_2.rx.map;
 
+import android.annotation.SuppressLint;
+
 import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 
+@SuppressWarnings({"SameParameterValue", "WeakerAccess"})
 public class MapExamples {
 
 	/** Takes list of string and concatenates it into one long string */
@@ -16,7 +17,8 @@ public class MapExamples {
 		return justObservable.map(this::concatenateList);
 	}
 
-	private String concatenateList(final List<String> list) {
+	@SuppressLint("NewApi")
+    private String concatenateList(final List<String> list) {
 
 		StringBuilder stringBuilder = new StringBuilder();
 		list.forEach(stringBuilder::append);
@@ -36,11 +38,18 @@ public class MapExamples {
 	 */
 	public Single<String> mapToNull(final Integer integer) {
 		return Single.just(integer)
-				.map(new Function<Integer, String>() {
-					@Override
-					public String apply(@NonNull final Integer integer) throws Exception {
-						return null;
-					}
-				});
+				.map(integer1 -> null);
 	}
+
+    public Observable<String> mapToNullEvenNumbers(List<Integer> list) {
+        return Observable.fromIterable(list)
+                .map(integer -> {
+
+                    if (integer % 2 == 0) {
+                        return null;
+                    }
+
+                    return String.valueOf(integer);
+                });
+    }
 }

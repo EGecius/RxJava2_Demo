@@ -2,6 +2,8 @@ package com.egecius.rxjava2_demo_2.rx.map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import static java.util.Arrays.asList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,5 +61,17 @@ public class MapExamplesTest {
                 .assertNoValues()
                 .assertError(NullPointerException.class);
 	}
+
+	/** Stream only fails when it maps to null. All values emitted prior to null still reach
+     * Observer */
+	@Test
+	public void whenMapsToNullPriorValidValuesGetEmitted() {
+        List<Integer> list = asList(1, 2, 3);
+        TestObserver<String> testObserver = mSut.mapToNullEvenNumbers(list).test();
+
+        testObserver
+                .assertValue("1")
+                .assertError(NullPointerException.class);
+    }
 
 }
