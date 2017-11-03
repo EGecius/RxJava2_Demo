@@ -7,7 +7,7 @@ import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.ReplaySubject;
 
-class SubjectsExamples {
+class ReplaySubjectExamples {
 
     ReplaySubject<Integer> defaultReplaySubject(List<Integer> list) {
 

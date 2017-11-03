@@ -14,13 +14,13 @@ import io.reactivex.schedulers.TestScheduler;
 import io.reactivex.subjects.ReplaySubject;
 
 @RunWith(MockitoJUnitRunner.class)
-public class SubjectsExamplesTest {
+public class ReplaySubjectExamplesTest {
 
-    private SubjectsExamples mSut;
+    private ReplaySubjectExamples mSut;
 
     @Before
     public void setUp() {
-        mSut = new SubjectsExamples();
+        mSut = new ReplaySubjectExamples();
     }
 
     @Test
