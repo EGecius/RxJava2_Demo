@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.subjects;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static java.util.Arrays.asList;
 
 import org.junit.Before;
@@ -83,6 +85,21 @@ public class BehaviorSubjectExamplesTest {
                 .assertValues(3, 14, 15)
                 .assertNotComplete()
                 .assertError(EXCEPTION);
+    }
+
+    @Test
+    public void getValueReturnsCachedEvent() {
+        BehaviorSubject<Integer> subject = mSut.emit(asList(1, 2, 3));
+
+        assertThat(subject.getValue()).isEqualTo(3);
+
+        subject.onNext(14);
+
+        assertThat(subject.getValue()).isEqualTo(14);
+
+        subject.onNext(15);
+
+        assertThat(subject.getValue()).isEqualTo(15);
     }
 
 }
