@@ -1,13 +1,16 @@
 package com.egecius.rxjava2_demo_2.rx.subjects;
 
 import static java.util.Arrays.asList;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import io.reactivex.observers.TestObserver;
+import io.reactivex.schedulers.TestScheduler;
 import io.reactivex.subjects.ReplaySubject;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -67,6 +70,35 @@ public class SubjectsExamplesTest {
         testObserver
                 .assertNoErrors()
                 .assertValues("two", "three");
+    }
+
+    /** For some reason I can't understand how to use advanceTimeBy */
+    @Test @Ignore
+    public void createWithTimeWithoutThreadSleep() {
+
+        TestScheduler testScheduler = new TestScheduler();
+
+        ReplaySubject<String> subject = mSut.createWithTime20Millis();
+
+        TestObserver<String> testObserver = subject
+                .subscribeOn(testScheduler)
+                .observeOn(testScheduler)
+                .test();
+
+        // since our replay is limited to 20 millis, after only 10 millis we should still all 3
+        // expected emissions
+        testScheduler.advanceTimeBy(10, MILLISECONDS);
+
+        testObserver
+                .assertNoErrors()
+                .assertValues("one", "two", "three");
+
+        // after 100 millis there should be no emissions left
+        testScheduler.advanceTimeBy(100, MILLISECONDS);
+
+        testObserver
+                .assertNoErrors()
+                .assertNoValues();
     }
 
 }

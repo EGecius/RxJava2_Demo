@@ -32,7 +32,6 @@ class SubjectsExamples {
         return subject;
     }
 
-
     /** This subject cashes events from last 21 millis only. Since thread will sleep for 30
      * millis, only last events will be received: "two" "three" */
     ReplaySubject<String> createWithTime() throws InterruptedException {
@@ -50,6 +49,17 @@ class SubjectsExamples {
         subject.onNext("three");
 
         Thread.sleep(1);
+
+        return subject;
+    }
+
+    ReplaySubject<String> createWithTime20Millis() {
+        ReplaySubject<String> subject = ReplaySubject.createWithTime(20, TimeUnit.MILLISECONDS,
+                Schedulers.trampoline());
+
+        subject.onNext("one");
+        subject.onNext("two");
+        subject.onNext("three");
 
         return subject;
     }
