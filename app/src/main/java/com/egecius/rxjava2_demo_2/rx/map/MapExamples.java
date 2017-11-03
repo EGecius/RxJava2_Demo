@@ -30,9 +30,9 @@ public class MapExamples {
 				.map(String::valueOf);
 	}
 
-	/** How does the stream terminate if null value occurs in stream?
-	 First, it emits null value, then it throws NullPointerException and terminates stream with
-	 onError.
+	/**
+     * How does the stream terminate if null value occurs in stream?
+     * It terminates with NullPointerException. Null value does not get emitted.
 	 */
 	public Single<String> mapToNull(final Integer integer) {
 		return Single.just(integer)

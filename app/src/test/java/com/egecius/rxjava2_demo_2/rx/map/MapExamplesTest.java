@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.map;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.reactivex.observers.TestObserver;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MapExamplesTest {
@@ -52,13 +52,12 @@ public class MapExamplesTest {
 	}
 
 	@Test
-	public void mapFailsWhenEmitsNull() {
+	public void whenMapsToNullStreamFailsWithNoValuesEmitted() {
 		TestObserver<String> testObserver = mSut.mapToNull(69).test();
 
-		testObserver.assertComplete();
-		List<String> values = testObserver.values();
-		assertThat(values.get(0)).isNull();
-		testObserver.assertError(NullPointerException.class);
+		testObserver
+                .assertNoValues()
+                .assertError(NullPointerException.class);
 	}
 
 }
