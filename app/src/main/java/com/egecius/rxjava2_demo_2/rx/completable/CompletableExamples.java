@@ -33,26 +33,32 @@ public class CompletableExamples {
     }
 
     private Completable firstCompletable() {
-        list.add(FIRST_COMPLETABLE);
-        return Completable.complete();
+        return Completable.create(emitter -> {
+            list.add(FIRST_COMPLETABLE);
+            emitter.onComplete();
+        });
     }
 
     private Completable secondCompletable() {
-        list.add(SECOND_COMPLETABLE);
-        return Completable.complete();
+        return Completable.create(emitter -> {
+            list.add(SECOND_COMPLETABLE);
+            emitter.onComplete();
+        });
     }
 
     private CompletableSource thirdCompletable() {
-        list.add(THIRD_COMPLETABLE);
-        return Completable.complete();
+        return Completable.create(e -> {
+            list.add(THIRD_COMPLETABLE);
+            e.onComplete();
+        });
     }
 
     /** doOnComplete is executed at the end no matter where you place it in the chain */
     Completable doOnCompleteAndThen() {
         return firstCompletable()
-                .doOnComplete(myDoOnComplete())
                 .andThen(secondCompletable())
-                .andThen(thirdCompletable());
+                .andThen(thirdCompletable())
+                .doOnComplete(myDoOnComplete());
     }
 
     private Action myDoOnComplete() {
@@ -74,13 +80,17 @@ public class CompletableExamples {
     }
 
     private Completable pathACompletable() {
-        list.add(PATH_A_COMPLETABLE);
-        return Completable.complete();
+        return Completable.create(e -> {
+            list.add(PATH_A_COMPLETABLE);
+            e.onComplete();
+        });
     }
 
     private Completable pathBCompletable() {
-        list.add(PATH_B_COMPLETABLE);
-        return Completable.complete();
+        return Completable.create(e -> {
+            list.add(PATH_B_COMPLETABLE);
+            e.onComplete();
+        });
     }
 
     Completable divergingPathWithMaybeA() {

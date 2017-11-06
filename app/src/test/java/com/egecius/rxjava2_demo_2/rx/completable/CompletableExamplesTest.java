@@ -115,8 +115,24 @@ public class CompletableExamplesTest {
                 .assertNoValues()
                 .assertError(CompletableExamples.ERROR_1);
         List<String> list = mSut.list;
-        assertThat(list.size()).isEqualTo(3);
+        assertThat(list.size()).isEqualTo(1);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+    }
+
+    @Test
+    public void doesNotExecutePathAWhenNotSubscribed() {
+        mSut.divergingPathWithMaybeA();
+
+        List<String> list = mSut.list;
+        assertThat(list).isEmpty();
+    }
+
+    @Test
+    public void doesNotExecutePathBWhenNotSubscribed() {
+        mSut.divergingPathWithMaybeB();
+
+        List<String> list = mSut.list;
+        assertThat(list).isEmpty();
     }
 
 }
