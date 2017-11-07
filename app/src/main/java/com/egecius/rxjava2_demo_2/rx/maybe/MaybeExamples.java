@@ -2,14 +2,14 @@ package com.egecius.rxjava2_demo_2.rx.maybe;
 
 import android.support.annotation.Nullable;
 
+import java.util.List;
+import java.util.NoSuchElementException;
+
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
-import io.reactivex.SingleSource;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Function;
 
 public class MaybeExamples {
 
@@ -66,6 +66,27 @@ public class MaybeExamples {
     private CompletableSource myAndThen() {
         isAndThenExecuted = true;
         return Completable.complete();
+    }
+
+    public Maybe<String> filterEvenAndMapToString(List<Integer> list) {
+
+        return Observable.fromIterable(list)
+                .firstElement()
+                .filter(this::isEven)
+                .map(String::valueOf);
+    }
+
+    private boolean isEven(Integer integer) {
+        return integer % 2 == 0;
+    }
+
+    /** flatMapSingle fails with {@link NoSuchElementException} when it receives no value, i.e.
+     * when Maybe completes rather than calls onSuccess() */
+    public Single<String> flatMapSingle(List<Integer> list) {
+
+        return Observable.fromIterable(list)
+                .firstElement()
+                .flatMapSingle(integer -> Single.just(String.valueOf(integer)));
     }
 
 }

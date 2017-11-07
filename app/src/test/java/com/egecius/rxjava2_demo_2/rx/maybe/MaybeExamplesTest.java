@@ -102,4 +102,46 @@ public class MaybeExamplesTest {
         assertThat(mSut.isAndThenExecuted).isTrue();
     }
 
+    @Test
+    public void filterAndMap() {
+
+        TestObserver<String> testObserver = mSut.filterEvenAndMapToString(asList(2)).test();
+
+        testObserver
+                .assertComplete()
+                .assertValue("2");
+    }
+
+    @Test
+    public void filterAndMap2() {
+
+        TestObserver<String> testObserver = mSut.filterEvenAndMapToString(asList(1)).test();
+
+        testObserver
+                .assertComplete()
+                .assertNoValues();
+    }
+
+    @Test
+    public void filterAndMap3() {
+
+        @SuppressWarnings("unchecked")
+        TestObserver<String> testObserver = mSut.filterEvenAndMapToString(Collections.EMPTY_LIST).test();
+
+        testObserver
+                .assertComplete()
+                .assertNoValues();
+    }
+
+    @Test (expected = AssertionError.class)
+    public void flatMapSingleFailsWhenNoElementsReceived() {
+
+        @SuppressWarnings("unchecked")
+        TestObserver<String> testObserver = mSut.flatMapSingle(Collections.EMPTY_LIST).test();
+
+        testObserver
+                .assertComplete()
+                .assertNoValues();
+    }
+
 }
