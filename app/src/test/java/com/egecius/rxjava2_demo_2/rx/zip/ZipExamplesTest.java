@@ -30,7 +30,6 @@ public class ZipExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertValues("1_one", "2_two", "3_three");
     }
 
@@ -40,7 +39,6 @@ public class ZipExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertValues("1_one", "2_two", "3_three");
     }
 

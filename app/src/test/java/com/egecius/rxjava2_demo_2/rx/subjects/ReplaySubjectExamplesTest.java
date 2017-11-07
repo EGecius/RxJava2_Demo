@@ -31,7 +31,6 @@ public class ReplaySubjectExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertValues(11, 12, 13);
     }
 
@@ -44,7 +43,6 @@ public class ReplaySubjectExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertValueCount(2);
     }
 
@@ -68,7 +66,7 @@ public class ReplaySubjectExamplesTest {
         TestObserver<String> testObserver = subject.test();
 
         testObserver
-                .assertNoErrors()
+                .assertComplete()
                 .assertValues("two", "three");
     }
 

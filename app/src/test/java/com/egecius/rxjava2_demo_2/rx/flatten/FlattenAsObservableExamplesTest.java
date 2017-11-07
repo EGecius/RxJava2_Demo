@@ -25,7 +25,6 @@ public class FlattenAsObservableExamplesTest {
 		//THEN
 		testObserver.assertValues("one", "two", "three");
 		testObserver.assertComplete();
-		testObserver.assertNoErrors();
 	}
 
 }

@@ -34,7 +34,6 @@ public class CreateExamplesTest {
 
 		testObserver
 				.assertComplete()
-				.assertNoErrors()
 				.assertValues(3, 2, 1);
 	}
 

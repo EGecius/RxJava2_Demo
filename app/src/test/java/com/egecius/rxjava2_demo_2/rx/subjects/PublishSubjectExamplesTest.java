@@ -29,7 +29,6 @@ public class PublishSubjectExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertNoValues();
     }
 

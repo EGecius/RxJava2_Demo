@@ -30,7 +30,6 @@ public class MaybeExamplesTest {
 		TestObserver<Integer> testObserver = mSut.maybeToSingle(1).test();
 
 		testObserver
-				.assertNoErrors()
 				.assertComplete()
 				.assertValues(1);
 	}
@@ -49,7 +48,6 @@ public class MaybeExamplesTest {
         TestObserver<Integer> testObserver = mSut.defaultIfEmpty(5).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(5);
 	}
@@ -59,7 +57,6 @@ public class MaybeExamplesTest {
         TestObserver<Integer> testObserver = mSut.defaultIfEmpty(null).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(-1);
     }

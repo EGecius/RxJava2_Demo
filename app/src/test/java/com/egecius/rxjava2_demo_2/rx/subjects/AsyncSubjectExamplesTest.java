@@ -34,7 +34,6 @@ public class AsyncSubjectExamplesTest {
 
         testObserver
                 .assertComplete()
-                .assertNoErrors()
                 .assertValue(3);
     }
 

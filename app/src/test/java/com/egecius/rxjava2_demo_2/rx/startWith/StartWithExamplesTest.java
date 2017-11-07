@@ -1,7 +1,5 @@
 package com.egecius.rxjava2_demo_2.rx.startWith;
 
-import static android.R.id.list;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -29,7 +27,6 @@ public class StartWithExamplesTest {
         TestObserver<Integer> testObserver = mSut.startWithObservable(list).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(3, 14, 1, 2, 3);
     }
@@ -41,7 +38,6 @@ public class StartWithExamplesTest {
         TestObserver<Integer> testObserver = mSut.startWithIterable(list).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(3, 14, 1, 2, 3);
     }
@@ -53,7 +49,6 @@ public class StartWithExamplesTest {
         TestObserver<Integer> testObserver = mSut.startWithArray(array).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(3, 14, 1, 2, 3);
     }
@@ -63,7 +58,6 @@ public class StartWithExamplesTest {
         TestObserver<Integer> testObserver = mSut.startWithElement(14).test();
 
         testObserver
-                .assertNoErrors()
                 .assertComplete()
                 .assertValues(14, 1, 2, 3);
     }

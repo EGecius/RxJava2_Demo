@@ -26,8 +26,8 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.andThen().test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
+
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(3);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
@@ -40,8 +40,7 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.doOnCompleteAndThen().test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(4);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
@@ -55,8 +54,8 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.divergingPaths(CompletableExamples.Path.A).test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
+
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(3);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
@@ -69,8 +68,7 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.divergingPaths(CompletableExamples.Path.B).test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(3);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
@@ -83,8 +81,7 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.divergingPathWithMaybeA().test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(3);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
@@ -97,8 +94,7 @@ public class CompletableExamplesTest {
         TestObserver<Void> testObserver = mSut.divergingPathWithMaybeB().test();
 
         testObserver
-                .assertComplete()
-                .assertNoErrors();
+                .assertComplete();
         List<String> list = mSut.list;
         assertThat(list.size()).isEqualTo(3);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
