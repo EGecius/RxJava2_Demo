@@ -20,7 +20,8 @@ public class CompletableExamples {
     public static final String FIRST_COMPLETABLE = "first_completable";
     public static final String SECOND_COMPLETABLE = "second_completable";
     public static final String THIRD_COMPLETABLE = "third_completable";
-    public static final String DO_ON_COMPLETE = "doOnComplete";
+    public static final String DO_ON_COMPLETE_A = "DO_ON_COMPLETE_A";
+    public static final String DO_ON_COMPLETE_B = "DO_ON_COMPLETE_B";
     public static final String PATH_A_COMPLETABLE = "PATH_A_COMPLETABLE";
     public static final String PATH_B_COMPLETABLE = "PATH_B_COMPLETABLE";
 
@@ -53,16 +54,20 @@ public class CompletableExamples {
         });
     }
 
-    /** doOnComplete is executed at the end no matter where you place it in the chain */
     Completable doOnCompleteAndThen() {
         return firstCompletable()
+                .doOnComplete(myDoOnCompleteA())
                 .andThen(secondCompletable())
                 .andThen(thirdCompletable())
-                .doOnComplete(myDoOnComplete());
+                .doOnComplete(myDoOnCompleteB());
     }
 
-    private Action myDoOnComplete() {
-        return () -> list.add(DO_ON_COMPLETE);
+    private Action myDoOnCompleteA() {
+        return () -> list.add(DO_ON_COMPLETE_A);
+    }
+
+    private Action myDoOnCompleteB() {
+        return () -> list.add(DO_ON_COMPLETE_B);
     }
 
 

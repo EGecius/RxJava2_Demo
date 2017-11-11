@@ -42,11 +42,12 @@ public class CompletableExamplesTest {
         testObserver
                 .assertComplete();
         List<String> list = mSut.list;
-        assertThat(list.size()).isEqualTo(4);
+        assertThat(list.size()).isEqualTo(5);
         assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
-        assertThat(list.get(1)).isEqualTo(CompletableExamples.SECOND_COMPLETABLE);
-        assertThat(list.get(2)).isEqualTo(CompletableExamples.THIRD_COMPLETABLE);
-        assertThat(list.get(3)).isEqualTo(CompletableExamples.DO_ON_COMPLETE);
+        assertThat(list.get(1)).isEqualTo(CompletableExamples.DO_ON_COMPLETE_A);
+        assertThat(list.get(2)).isEqualTo(CompletableExamples.SECOND_COMPLETABLE);
+        assertThat(list.get(3)).isEqualTo(CompletableExamples.THIRD_COMPLETABLE);
+        assertThat(list.get(4)).isEqualTo(CompletableExamples.DO_ON_COMPLETE_B);
     }
 
     @Test
