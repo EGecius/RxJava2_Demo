@@ -111,4 +111,11 @@ public class AssertionsExamplesTest {
         });
     }
 
+    @Test
+    public void assertErrorMessage() {
+        TestObserver<Object> testObserver = Observable.error(new Exception(EXCEPTION_MESSAGE)).test();
+
+        testObserver.assertErrorMessage(EXCEPTION_MESSAGE);
+    }
+
 }
