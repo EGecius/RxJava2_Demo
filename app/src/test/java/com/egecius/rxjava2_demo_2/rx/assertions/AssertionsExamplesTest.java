@@ -27,9 +27,32 @@ public class AssertionsExamplesTest {
 
     @Test
     public void assertSubscribed() {
-        TestObserver<Integer> testObserver = Observable.just(1).test();
+        TestObserver<Integer> testObserver = mSut.getJust().test();
 
         testObserver.assertSubscribed();
+    }
+
+    @Test
+    public void assertNoValues() {
+        TestObserver<Object> testObserver = Observable.empty().test();
+
+        testObserver.assertNoValues();
+    }
+
+    /** assertEmpty() assertion check for any events, including onComplete */
+    @Test (expected = AssertionError.class)
+    public void assertEmpty1() {
+        TestObserver<Object> testObserver = Observable.empty().test();
+
+        testObserver.assertEmpty();
+    }
+
+    /** assertEmpty() assertion check for any events, including onError */
+    @Test (expected = AssertionError.class)
+    public void assertEmpty2() {
+        TestObserver<Object> testObserver = Observable.error(new Exception()).test();
+
+        testObserver.assertEmpty();
     }
 
 
