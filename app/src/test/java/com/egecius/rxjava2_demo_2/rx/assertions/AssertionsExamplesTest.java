@@ -194,4 +194,26 @@ public class AssertionsExamplesTest {
     }
 
 
+    @Test
+    public void assertValueAt() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueAt(1, 2);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void assertValueAt2() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueAt(0, 0);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void assertValueAt3() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueAt(2, 2);
+    }
+
+
 }
