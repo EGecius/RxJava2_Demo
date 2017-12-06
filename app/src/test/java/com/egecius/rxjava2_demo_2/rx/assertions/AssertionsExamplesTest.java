@@ -164,4 +164,11 @@ public class AssertionsExamplesTest {
         testObserver.assertNever(0);
     }
 
+    @Test
+    public void assertNoTimeout() {
+        TestObserver<Object> testObserver = Observable.empty().test();
+
+        testObserver.assertNoTimeout();
+    }
+
 }
