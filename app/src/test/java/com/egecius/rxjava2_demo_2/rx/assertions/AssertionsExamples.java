@@ -28,4 +28,11 @@ public class AssertionsExamples {
             emitter.onError(EGIS_EXCEPTION);
         });
     }
+
+    Observable<Integer> emitWithoutCompletion(int item1, int item2) {
+        return Observable.create(e -> {
+            e.onNext(item1);
+            e.onNext(item2);
+        });
+    }
 }

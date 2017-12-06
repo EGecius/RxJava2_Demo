@@ -171,4 +171,27 @@ public class AssertionsExamplesTest {
         testObserver.assertNoTimeout();
     }
 
+
+    @Test
+    public void assertResult() {
+        TestObserver<Integer> testObserver = Observable.just(1, 2).test();
+
+        testObserver.assertResult(1, 2);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void assertResult2() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertResult(1, 2);
+    }
+
+    @Test
+    public void assertValues() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValues(1, 2);
+    }
+
+
 }
