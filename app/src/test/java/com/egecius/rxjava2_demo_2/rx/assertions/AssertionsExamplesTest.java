@@ -10,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import io.reactivex.functions.Predicate;
 import io.reactivex.observers.TestObserver;
@@ -291,6 +293,16 @@ public class AssertionsExamplesTest {
         TestObserver<Object> testObserver = Observable.error(new Exception()).test();
 
         assertThat(testObserver.errorCount()).isEqualTo(1);
+    }
+
+    @Test
+    public void errors() {
+        Exception exception = new Exception();
+        TestObserver<Object> testObserver = Observable.error(exception).test();
+
+        List<Throwable> errors = testObserver.errors();
+        assertThat(errors.size()).isEqualTo(1);
+        assertThat(errors.get(0)).isEqualTo(exception);
     }
 
 }
