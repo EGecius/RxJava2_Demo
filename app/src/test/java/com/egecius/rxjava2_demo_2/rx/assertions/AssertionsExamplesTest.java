@@ -150,4 +150,18 @@ public class AssertionsExamplesTest {
         testObserver.assertFailureAndMessage(EgisException.class, mSut.getExceptionMessage(), 0, 1, 2);
     }
 
+    @Test
+    public void assertNever() {
+        TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
+
+        testObserver.assertNever(-1);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void assertNever2() {
+        TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
+
+        testObserver.assertNever(0);
+    }
+
 }
