@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.assertions;
 
+import static java.util.Arrays.asList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -215,5 +217,19 @@ public class AssertionsExamplesTest {
         testObserver.assertValueAt(2, 2);
     }
 
+    @Test
+    public void assertValueSequence() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueSequence(asList(1, 2));
+    }
+
+    // fails when same order is not maintained
+    @Test (expected = AssertionError.class)
+    public void assertValueSequence2() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueSequence(asList(2, 1));
+    }
 
 }
