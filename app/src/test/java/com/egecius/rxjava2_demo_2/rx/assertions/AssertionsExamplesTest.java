@@ -247,4 +247,18 @@ public class AssertionsExamplesTest {
         testObserver.assertValueSet(asList(2, 1));
     }
 
+    @Test
+    public void assertValuesOnly() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValuesOnly(1, 2);
+    }
+
+    @Test (expected = AssertionError.class)
+    public void assertValuesOnly2() {
+        TestObserver<Integer> testObserver = Observable.just(1, 2).test();
+
+        testObserver.assertValuesOnly(1, 2);
+    }
+
 }
