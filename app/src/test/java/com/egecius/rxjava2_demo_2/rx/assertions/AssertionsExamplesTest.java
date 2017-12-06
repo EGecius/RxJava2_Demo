@@ -1,8 +1,11 @@
 package com.egecius.rxjava2_demo_2.rx.assertions;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import static java.util.Arrays.asList;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -260,5 +263,28 @@ public class AssertionsExamplesTest {
 
         testObserver.assertValuesOnly(1, 2);
     }
+
+    @Test
+    public void completions() {
+        TestObserver<Integer> testObserver = Observable.just(1, 2).test();
+
+        assertThat(testObserver.completions()).isEqualTo(1);
+    }
+
+    // TODO: 06/12/2017 can one Obseerver subscribe to multiple Observables?
+    @Test @Ignore // I thought this would work but it does not.
+    public void completion2() {
+        Observable<Integer> observable1 = Observable.just(1);
+        Observable<Integer> observable2 = Observable.just(2);
+        Observable<Integer> observable3 = Observable.just(3);
+
+        TestObserver<Integer> testObserver = new TestObserver<>();
+        observable1.subscribe(testObserver);
+        observable2.subscribe(testObserver);
+        observable3.subscribe(testObserver);
+
+        assertThat(testObserver.completions()).isEqualTo(2);
+    }
+
 
 }
