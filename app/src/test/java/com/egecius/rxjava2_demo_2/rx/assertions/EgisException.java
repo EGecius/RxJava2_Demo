@@ -5,6 +5,7 @@ class EgisException extends Exception {
     private final String message;
 
     EgisException(String message) {
+        super(message);
         this.message = message;
     }
 

@@ -1,7 +1,6 @@
 package com.egecius.rxjava2_demo_2.rx.assertions;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -144,7 +143,7 @@ public class AssertionsExamplesTest {
         }, 0, 1, 2);
     }
 
-    @Test @Ignore // there seems to be a bug here. Message does not get asserted - issue submitted
+    @Test
     public void assertFailureAndMessage() {
         TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
 
