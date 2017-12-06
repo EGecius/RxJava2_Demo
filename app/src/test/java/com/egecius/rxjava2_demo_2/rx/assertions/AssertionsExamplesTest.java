@@ -286,5 +286,11 @@ public class AssertionsExamplesTest {
         assertThat(testObserver.completions()).isEqualTo(2);
     }
 
+    @Test
+    public void errorCount() {
+        TestObserver<Object> testObserver = Observable.error(new Exception()).test();
+
+        assertThat(testObserver.errorCount()).isEqualTo(1);
+    }
 
 }
