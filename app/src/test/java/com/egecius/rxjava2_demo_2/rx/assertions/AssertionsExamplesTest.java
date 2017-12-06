@@ -232,4 +232,19 @@ public class AssertionsExamplesTest {
         testObserver.assertValueSequence(asList(2, 1));
     }
 
+    @Test
+    public void assertValueSet() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueSet(asList(1, 2));
+    }
+
+    // assertValueSet takes Collection in any order
+    @Test
+    public void assertValueSet2() {
+        TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
+
+        testObserver.assertValueSet(asList(2, 1));
+    }
+
 }
