@@ -1,6 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.assertions;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -12,7 +13,7 @@ import io.reactivex.observers.TestObserver;
 @RunWith(MockitoJUnitRunner.class)
 public class AssertionsExamplesTest {
 
-    private static final String EXCEPTION_MESSAGE = "message";
+    private static final String EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE";
     private AssertionsExamples mSut;
 
     @Before
@@ -141,6 +142,13 @@ public class AssertionsExamplesTest {
                 return throwable == mSut.getException();
             }
         }, 0, 1, 2);
+    }
+
+    @Test @Ignore // there seems to be a bug here. Message does not get asserted - issue submitted
+    public void assertFailureAndMessage() {
+        TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
+
+        testObserver.assertFailureAndMessage(EgisException.class, mSut.getExceptionMessage(), 0, 1, 2);
     }
 
 }

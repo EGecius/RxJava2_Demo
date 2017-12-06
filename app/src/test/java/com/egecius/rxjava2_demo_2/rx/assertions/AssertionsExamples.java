@@ -4,10 +4,15 @@ import io.reactivex.Observable;
 
 public class AssertionsExamples {
 
-    private static final EgisException EGIS_EXCEPTION = new EgisException("egis");
+    private static final String EXCEPTION_MESSAGE = "egis";
+    private static final EgisException EGIS_EXCEPTION = new EgisException(EXCEPTION_MESSAGE);
 
     public EgisException getException() {
         return EGIS_EXCEPTION;
+    }
+
+    public String getExceptionMessage() {
+        return EXCEPTION_MESSAGE;
     }
 
     Observable<Integer> getJust() {
