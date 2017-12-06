@@ -10,6 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Collections;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -303,6 +304,31 @@ public class AssertionsExamplesTest {
         List<Throwable> errors = testObserver.errors();
         assertThat(errors.size()).isEqualTo(1);
         assertThat(errors.get(0)).isEqualTo(exception);
+    }
+
+    @Test
+    public void getEvents() {
+        TestObserver<Integer> testObserver = Observable.just(33, 44).test();
+
+        List<List<Object>> events = testObserver.getEvents();
+        assertThat(events.size()).isEqualTo(3);
+        assertThat(events.get(0)).isEqualTo(asList(33, 44));
+        assertThat(events.get(1)).isEqualTo(Collections.emptyList());
+        // last one is list of OnCompleteNotification - compiler can't find it
+//        assertThat(events.get(2)).isEqualTo(asList(new OnCompleteNotification()));
+    }
+
+    @Test
+    public void getEvents2() {
+        Exception exception = new Exception();
+        TestObserver<Object> testObserver = Observable.error(exception).test();
+
+        List<List<Object>> events = testObserver.getEvents();
+        assertThat(events.size()).isEqualTo(3);
+        assertThat(events.get(0)).isEqualTo(Collections.emptyList());
+        assertThat(events.get(1)).isEqualTo(Collections.singletonList(exception));
+        // last one is list of OnCompleteNotification - compiler can't find it
+//        assertThat(events.get(2)).isEqualTo(asList(new OnCompleteNotification()));
     }
 
 }
