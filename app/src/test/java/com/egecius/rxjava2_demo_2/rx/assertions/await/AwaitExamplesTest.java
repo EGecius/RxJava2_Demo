@@ -58,4 +58,16 @@ public class AwaitExamplesTest {
         testObserver.assertResult(1);
     }
 
+    @Test
+    public void awaitCount() throws InterruptedException {
+        TestObserver<Integer> testObserver = Observable
+                .just(1, 2, 3)
+                .delay(1, TimeUnit.SECONDS)
+                .test();
+
+        testObserver.awaitCount(3);
+
+        testObserver.assertResult(1, 2, 3);
+    }
+
 }
