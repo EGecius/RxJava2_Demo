@@ -43,4 +43,19 @@ public class AwaitExamplesTest {
 
         testObserver.assertResult(1);
     }
+
+
+    // awaitTerminalEvent(): await() + returns false in case of InterruptedException
+    @Test
+    public void awaitTerminalEvent() throws InterruptedException {
+        TestObserver<Integer> testObserver = Observable
+                .just(1)
+                .delay(1, TimeUnit.SECONDS)
+                .test();
+
+        testObserver.awaitTerminalEvent();
+
+        testObserver.assertResult(1);
+    }
+
 }
