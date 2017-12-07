@@ -331,4 +331,12 @@ public class AssertionsExamplesTest {
 //        assertThat(events.get(2)).isEqualTo(asList(new OnCompleteNotification()));
     }
 
+    @Test
+    public void lastThread() {
+        TestObserver<Integer> testObserver = Observable.just(1).test();
+
+        Thread thread = testObserver.lastThread();
+        assertThat(thread.getName()).isEqualTo("main");
+    }
+
 }
