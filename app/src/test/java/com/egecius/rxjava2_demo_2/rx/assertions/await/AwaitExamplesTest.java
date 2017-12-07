@@ -70,4 +70,16 @@ public class AwaitExamplesTest {
         testObserver.assertResult(1, 2, 3);
     }
 
+    @Test
+    public void clearTimeout() throws InterruptedException {
+        TestObserver<Integer> testObserver = Observable
+                .just(1, 2, 3)
+                .delay(1, TimeUnit.SECONDS)
+                .test();
+
+        testObserver.isTimeout();
+
+        testObserver.assertResult(1, 2, 3);
+    }
+
 }
