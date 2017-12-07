@@ -10,11 +10,36 @@ import io.reactivex.observers.TestObserver;
 public class AwaitExamplesTest {
 
     // test fails when delay is added without calling awaitX() on TestObserver
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void delay() {
-        Observable<Integer> observable = Observable.just(1).delay(1, TimeUnit.NANOSECONDS);
+        TestObserver<Integer> testObserver = Observable
+                .just(1)
+                .delay(1, TimeUnit.NANOSECONDS)
+                .test();
 
-        TestObserver<Integer> testObserver = observable.test();
+        testObserver.assertResult(1);
+    }
+
+    @Test
+    public void await() throws InterruptedException {
+        TestObserver<Integer> testObserver = Observable
+                .just(1)
+                .delay(1, TimeUnit.SECONDS)
+                .test();
+
+        testObserver.await();
+
+        testObserver.assertResult(1);
+    }
+
+    @Test
+    public void await2() throws InterruptedException {
+        TestObserver<Integer> testObserver = Observable
+                .just(1)
+                .delay(1, TimeUnit.SECONDS)
+                .test();
+
+        testObserver.await(2, TimeUnit.SECONDS);
 
         testObserver.assertResult(1);
     }
