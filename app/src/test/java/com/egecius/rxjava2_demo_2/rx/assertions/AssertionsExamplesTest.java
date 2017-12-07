@@ -155,7 +155,8 @@ public class AssertionsExamplesTest {
     public void assertFailureAndMessage() {
         TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
 
-        testObserver.assertFailureAndMessage(EgisException.class, mSut.getExceptionMessage(), 0, 1, 2);
+        testObserver.assertFailureAndMessage(EgisException.class, mSut.getExceptionMessage(), 0, 1,
+                2);
     }
 
     @Test
@@ -165,7 +166,7 @@ public class AssertionsExamplesTest {
         testObserver.assertNever(-1);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertNever2() {
         TestObserver<Integer> testObserver = mSut.emitThreeIntegersAndFail().test();
 
@@ -187,7 +188,7 @@ public class AssertionsExamplesTest {
         testObserver.assertResult(1, 2);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertResult2() {
         TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
 
@@ -209,14 +210,14 @@ public class AssertionsExamplesTest {
         testObserver.assertValueAt(1, 2);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertValueAt2() {
         TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
 
         testObserver.assertValueAt(0, 0);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertValueAt3() {
         TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
 
@@ -231,7 +232,7 @@ public class AssertionsExamplesTest {
     }
 
     // fails when same order is not maintained
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertValueSequence2() {
         TestObserver<Integer> testObserver = mSut.emitWithoutCompletion(1, 2).test();
 
@@ -260,7 +261,7 @@ public class AssertionsExamplesTest {
         testObserver.assertValuesOnly(1, 2);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void assertValuesOnly2() {
         TestObserver<Integer> testObserver = Observable.just(1, 2).test();
 
@@ -275,7 +276,8 @@ public class AssertionsExamplesTest {
     }
 
     // TODO: 06/12/2017 can one Obseerver subscribe to multiple Observables?
-    @Test @Ignore // I thought this would work but it does not.
+    @Test
+    @Ignore // I thought this would work but it does not.
     public void completion2() {
         Observable<Integer> observable1 = Observable.just(1);
         Observable<Integer> observable2 = Observable.just(2);
@@ -337,6 +339,16 @@ public class AssertionsExamplesTest {
 
         Thread thread = testObserver.lastThread();
         assertThat(thread.getName()).isEqualTo("main");
+    }
+
+    @Ignore // when this test fails, you can see tag in its logs
+    @Test
+    public void withTag() {
+        TestObserver<Integer> testObserver = Observable.just(1).test();
+
+        testObserver
+                .withTag("egis_tag")
+                .assertValue(2);
     }
 
 }
