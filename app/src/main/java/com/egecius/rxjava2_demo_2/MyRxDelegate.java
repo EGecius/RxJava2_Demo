@@ -3,6 +3,9 @@ package com.egecius.rxjava2_demo_2;
 import android.util.Log;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class MyRxDelegate {
     public MyRxDelegate() {
@@ -45,11 +48,43 @@ public class MyRxDelegate {
         Log.i("Eg:MainActivity:34", "printDoOnNext integer " + integer);
     }
 
-    /** This will crash the app because rxJava 2 not only prints the stracktrace but also
+    /**
+     * This will crash the app because rxJava 2 not only prints the stracktrace but also
      * forwards uncaught exception to current thread's error handler. On Android this is very
-     * strict and crashes the app */
+     * strict and crashes the app
+     */
     private void emitErrorWithoutOnErrorHandling() {
         Observable.error(new RuntimeException())
                 .subscribe();
+    }
+
+    /** This demonstrates that only the first call subscribeOn() has any effect */
+    void useMultipleSubscribeOn() {
+        Observable
+                .create((ObservableOnSubscribe<Integer>) e -> {
+                    printThread("Observable.create");
+                    e.onNext(1);
+                    e.onComplete();
+                })
+                .subscribeOn(Schedulers.io())
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        printThread("donOnNext after Schedulers.io()");
+                    }
+                })
+                .subscribeOn(Schedulers.computation())
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        printThread("donOnNext after Schedulers.computation()");
+                    }
+                })
+                .subscribe();
+    }
+
+    private void printThread(String methodName) {
+        String threadName = Thread.currentThread().getName();
+        Log.i("Eg:MyRxDelegate:80", methodName + " thread: " + threadName);
     }
 }

@@ -14,7 +14,9 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 //        emitErrorWithoutOnErrorHandling();
-        mMyRxDelegate.emitStreamWithFailure();
+//        mMyRxDelegate.emitStreamWithFailure();
+
+        mMyRxDelegate.useMultipleSubscribeOn();
     }
 
 }
