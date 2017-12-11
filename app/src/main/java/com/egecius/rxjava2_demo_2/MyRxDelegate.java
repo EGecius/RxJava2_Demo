@@ -6,6 +6,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class MyRxDelegate {
     public MyRxDelegate() {
@@ -86,5 +87,18 @@ public class MyRxDelegate {
     private void printThread(String methodName) {
         String threadName = Thread.currentThread().getName();
         Log.i("Eg:MyRxDelegate:80", methodName + " thread: " + threadName);
+    }
+
+    /** This demonstrates that subscribeOn works with BehaviorSubject */
+    void subscribeOnSubject() {
+        BehaviorSubject.createDefault(1)
+                .subscribeOn(Schedulers.io())
+                .doOnNext(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer integer) throws Exception {
+                        printThread("donOnNext after BehaviorSubject.createDefault");
+                    }
+                })
+                .subscribe();
     }
 }
