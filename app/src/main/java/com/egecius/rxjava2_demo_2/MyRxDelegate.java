@@ -124,7 +124,7 @@ public class MyRxDelegate {
 
                         printThread("start of subscribe()");
 
-                        callbackFramework.returnOnMainThread(new CallbackFramework.Callback() {
+                        callbackFramework.returnOnBackgroundThread(new CallbackFramework.Callback() {
                             @Override
                             public void onSuccess() {
                                 printThread("onSuccess");
