@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 //        emitErrorWithoutOnErrorHandling();
 //        mMyRxDelegate.emitStreamWithFailure();
 
-        mMyRxDelegate.subscribeOnSubject();
+        mMyRxDelegate.changeThreadsWithinSingleCreate();
     }
 
 }
