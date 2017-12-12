@@ -9,7 +9,7 @@ import java.util.concurrent.Executors;
 
 class CallbackFramework {
 
-    private final ExecutorService executorService = Executors.newFixedThreadPool(1);
+    private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private final Handler mHandler = new Handler();
 
     interface Callback {
