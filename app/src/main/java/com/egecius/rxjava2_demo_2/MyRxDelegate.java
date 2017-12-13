@@ -7,9 +7,11 @@ import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
+import io.reactivex.SingleSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.BiConsumer;
 import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -156,6 +158,72 @@ public class MyRxDelegate {
                         printThread("after observeOn");
                     }
                 })
+                .subscribe();
+    }
+
+    void applyMultipleObservOn() {
+        printThread("start of applyMultipleObservOn()");
+
+        Single
+                .create(new SingleOnSubscribe<Integer>() {
+                    @Override
+                    public void subscribe(SingleEmitter<Integer> emitter) throws Exception {
+
+                        printThread("start of subscribe()");
+
+                        callbackFramework.returnOnBackgroundThread(new CallbackFramework.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                printThread("onSuccess");
+
+                                emitter.onSuccess(1);
+                            }
+                        });
+                    }
+                })
+                .doOnEvent(new BiConsumer<Integer, Throwable>() {
+                    @Override
+                    public void accept(Integer integer, Throwable throwable) throws Exception {
+                        printThread("after Single.create with thread change");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnEvent(new BiConsumer<Integer, Throwable>() {
+                    @Override
+                    public void accept(Integer integer, Throwable throwable) throws Exception {
+                        printThread("after observeOn(AndroidSchedulers.mainThread()");
+                    }
+                })
+                .flatMap(new Function<Integer, SingleSource<Integer>>() {
+                    @Override
+                    public SingleSource<Integer> apply(Integer integer) throws Exception {
+                        return Single.create(new SingleOnSubscribe<Integer>() {
+                            @Override
+                            public void subscribe(SingleEmitter<Integer> emitter) throws Exception {
+                                callbackFramework.returnOnBackgroundThread(new CallbackFramework.Callback() {
+                                    @Override
+                                    public void onSuccess() {
+                                        emitter.onSuccess(1);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                })
+                .doOnEvent(new BiConsumer<Integer, Throwable>() {
+                    @Override
+                    public void accept(Integer integer, Throwable throwable) throws Exception {
+                        printThread("after changing thread to background");
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnEvent(new BiConsumer<Integer, Throwable>() {
+                    @Override
+                    public void accept(Integer integer, Throwable throwable) throws Exception {
+                        printThread("after observeOn(AndroidSchedulers.mainThread()");
+                    }
+                })
+                .subscribeOn(Schedulers.io())
                 .subscribe();
     }
 }
