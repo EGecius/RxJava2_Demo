@@ -3,6 +3,7 @@ package com.egecius.rxjava2_demo_2.rx.retry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.Before;
+import org.junit.ComparisonFailure;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -22,10 +23,35 @@ public class RetryExamplesTest {
     }
 
     @Test
-    public void retryWhenWithRange() {
-        TestObserver<Integer> testObserver = mSut.retryWhenWithRange(5).test();
+    public void retryWhen() {
+        TestObserver<Integer> testObserver = mSut.retryWhen(5).test();
 
         assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
+        testObserver
+                .assertNoValues()
+                .assertError(NoSuchElementException.class);
+    }
+
+    @Test
+    public void retryWhenWithDelay() throws InterruptedException {
+        TestObserver<Integer> testObserver = mSut.retryWhenWithDelay(5).test();
+
+        testObserver.await();
+
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+        testObserver
+                .assertNoValues()
+                .assertError(NoSuchElementException.class);
+    }
+
+    /** Test same as above but without 'await' fails without 'await' call */
+    @Test (expected = ComparisonFailure.class)
+    public void retryWhenWithDelayFailsWithoutAwait() throws InterruptedException {
+        TestObserver<Integer> testObserver = mSut.retryWhenWithDelay(5).test();
+
+//        testObserver.await();
+
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
         testObserver
                 .assertNoValues()
                 .assertError(NoSuchElementException.class);

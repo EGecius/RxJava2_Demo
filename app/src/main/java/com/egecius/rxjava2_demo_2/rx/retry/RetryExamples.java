@@ -2,6 +2,8 @@ package com.egecius.rxjava2_demo_2.rx.retry;
 
 import org.reactivestreams.Publisher;
 
+import java.util.concurrent.TimeUnit;
+
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
 import io.reactivex.FlowableEmitter;
@@ -28,7 +30,7 @@ public class RetryExamples {
 
     /** retryWhen resubscribes to original source when Publisher (returned by Function) signals a
      *  value. Uses Flowable.range */
-    Single<Integer> retryWhenWithRange(int retryCount) {
+    Single<Integer> retryWhen(int retryCount) {
 
         return Single.create(new SingleOnSubscribe<Integer>() {
             @Override
@@ -46,6 +48,31 @@ public class RetryExamples {
                         // 1) how many times we should retry
                         // 2) whether to add delay
                         return Flowable.range(1, retryCount);
+                    }
+                });
+    }
+
+    /** retryWhen resubscribes to original source when Publisher (returned by Function) signals a
+     *  value. Uses Flowable.range */
+    Single<Integer> retryWhenWithDelay(int retryCount) {
+
+        return Single.create(new SingleOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Integer> emitter) throws Exception {
+                subscribeCalled++;
+                emitter.onError(new RecoverableException());
+            }
+        })
+                .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
+                    @Override
+                    public Publisher<?> apply(@NonNull Flowable<Throwable> throwableFlowable)
+                            throws Exception {
+                        // throwableFlowable is a stream of exceptions, which we can use for
+                        // further logic of
+                        // 1) how many times we should retry
+                        // 2) whether to add delay
+                        return Flowable.range(1, retryCount)
+                                .delay(10, TimeUnit.MILLISECONDS);
                     }
                 });
     }
