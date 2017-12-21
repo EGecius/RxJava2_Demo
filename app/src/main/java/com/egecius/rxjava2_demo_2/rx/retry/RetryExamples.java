@@ -24,14 +24,14 @@ public class RetryExamples {
     }
 
     /** retryWhen resubscribes to original source when Publisher (returned by Function) signals a
-     *  value   */
-    Single<Integer> retryWhenTimes(int retryCount) {
+     *  value. Uses Flowable.range */
+    Single<Integer> retryWhenWithRange(int retryCount) {
 
         return Single.create(new SingleOnSubscribe<Integer>() {
             @Override
             public void subscribe(@NonNull SingleEmitter<Integer> emitter) throws Exception {
                 subscribeCalled++;
-                emitter.onError(new Exception());
+                emitter.onError(new RecoverableException());
             }
         })
                 .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {

@@ -22,8 +22,8 @@ public class RetryExamplesTest {
     }
 
     @Test
-    public void retryWhen() {
-        TestObserver<Integer> testObserver = mSut.retryWhenTimes(5).test();
+    public void retryWhenWithRange() {
+        TestObserver<Integer> testObserver = mSut.retryWhenWithRange(5).test();
 
         assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
         testObserver
