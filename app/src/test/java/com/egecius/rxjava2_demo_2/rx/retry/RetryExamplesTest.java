@@ -22,6 +22,12 @@ public class RetryExamplesTest {
         mSut = new RetryExamples();
     }
 
+    /**
+     * Notice here 'subscribe' was called one fewer time than in retryWhenWithDelay
+     * The reason probably is that here after last emission in Flowable onComplete() is called
+     * immediately, which immediately errors the stream with NoSuchElementException and thus
+     * preventing the last subscription
+     *  */
     @Test
     public void retryWhen() {
         TestObserver<Integer> testObserver = mSut.retryWhen(5).test();
