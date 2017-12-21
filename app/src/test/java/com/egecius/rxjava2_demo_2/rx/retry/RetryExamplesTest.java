@@ -26,25 +26,34 @@ public class RetryExamplesTest {
         TestObserver<Integer> testObserver = mSut.retryWhenTimes(5).test();
 
         assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
-        testObserver.assertError(NoSuchElementException.class);
+        testObserver
+                .assertNoValues()
+                .assertError(NoSuchElementException.class);
     }
 
     @Test
     public void retry() {
-        mSut.retryTimes(5).test();
+        TestObserver<Integer> testObserver = mSut.retryTimes(5).test();
 
+        // subscribed 6 times because the first subscribe is before any retry
         assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+        testObserver
+                .assertNoValues()
+                .assertError(Exception.class);
     }
 
     @Test
     public void retryWhen_withZip() {
 
-        mSut.retryWhenWithZipTimes(5).test();
+        TestObserver<String> testObserver = mSut.retryWhenWithZipTimes(5).test();
 
+        // subscribed 6 times because the first subscribe is before any retry
         assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+        testObserver
+                .assertNoValues();
 
+        // TODO: 21/12/2017 assertError
     }
-
 
 
 }

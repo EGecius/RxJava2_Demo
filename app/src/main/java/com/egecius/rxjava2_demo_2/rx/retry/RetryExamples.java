@@ -114,6 +114,6 @@ public class RetryExamples {
     private static class RecoverableException extends Throwable {
     }
 
-    private static class IrrecoverableException extends Throwable {
+    static class IrrecoverableException extends Throwable {
     }
 }
