@@ -7,6 +7,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.NoSuchElementException;
+
+import io.reactivex.observers.TestObserver;
+
 @RunWith(MockitoJUnitRunner.class)
 public class RetryExamplesTest {
 
@@ -19,9 +23,10 @@ public class RetryExamplesTest {
 
     @Test
     public void retryWhen() {
-        mSut.retryWhenTimes(5).test();
+        TestObserver<Integer> testObserver = mSut.retryWhenTimes(5).test();
 
-        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(5);
+        testObserver.assertError(NoSuchElementException.class);
     }
 
     @Test

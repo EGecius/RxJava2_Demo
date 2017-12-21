@@ -1,11 +1,20 @@
 package com.egecius.rxjava2_demo_2.rx.retry;
 
-import io.reactivex.*;
+import org.reactivestreams.Publisher;
+
+import io.reactivex.Flowable;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.BiFunction;
 import io.reactivex.functions.Function;
-import org.reactivestreams.Publisher;
 
+@SuppressWarnings("SameParameterValue")
 public class RetryExamples {
 
     private int subscribeCalled;
@@ -33,7 +42,7 @@ public class RetryExamples {
                         // further logic of
                         // 1) how many times we should retry
                         // 2) whether to add delay
-                        return Flowable.range(1, retryCount + 1);
+                        return Flowable.range(1, retryCount);
                     }
                 });
     }
