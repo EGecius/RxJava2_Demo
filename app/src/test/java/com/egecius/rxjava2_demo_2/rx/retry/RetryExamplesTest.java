@@ -32,6 +32,17 @@ public class RetryExamplesTest {
     }
 
     @Test
+    public void retryWhenWithoutOnComplete() {
+        TestObserver<Integer> testObserver = mSut.retryWithoutOnComplete(5).test();
+
+        assertThat(mSut.getSubscribeCalled()).isEqualTo(6);
+        testObserver
+                .assertNoValues()
+                .assertNoErrors()
+                .assertNotComplete();
+    }
+
+    @Test
     public void retry() {
         TestObserver<Integer> testObserver = mSut.retryTimes(5).test();
 

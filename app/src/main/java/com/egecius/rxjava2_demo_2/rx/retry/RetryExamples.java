@@ -2,7 +2,10 @@ package com.egecius.rxjava2_demo_2.rx.retry;
 
 import org.reactivestreams.Publisher;
 
+import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -43,6 +46,37 @@ public class RetryExamples {
                         // 1) how many times we should retry
                         // 2) whether to add delay
                         return Flowable.range(1, retryCount);
+                    }
+                });
+    }
+
+    /** If retryWhen Flowable does not complete, the whole stream never terminates  */
+    Single<Integer> retryWithoutOnComplete(int retryCount) {
+
+        return Single.create(new SingleOnSubscribe<Integer>() {
+            @Override
+            public void subscribe(@NonNull SingleEmitter<Integer> emitter) throws Exception {
+                subscribeCalled++;
+                emitter.onError(new RecoverableException());
+            }
+        })
+                .retryWhen(new Function<Flowable<Throwable>, Publisher<?>>() {
+                    @Override
+                    public Publisher<?> apply(@NonNull Flowable<Throwable> throwableFlowable)
+                            throws Exception {
+                        // throwableFlowable is a stream of exceptions, which we can use for
+                        // further logic of
+                        // 1) how many times we should retry
+                        // 2) whether to add delay
+                        return Flowable.create(new FlowableOnSubscribe<Long>() {
+                            @Override
+                            public void subscribe(FlowableEmitter<Long> emitter) throws Exception {
+                                for (int i = 0; i < retryCount; i++) {
+                                    emitter.onNext(0L);
+                                }
+                                //intentionally not calling onComplete
+                            }
+                        }, BackpressureStrategy.BUFFER);
                     }
                 });
     }
@@ -110,6 +144,7 @@ public class RetryExamples {
                 });
 
     }
+
 
     private static class RecoverableException extends Throwable {
     }
