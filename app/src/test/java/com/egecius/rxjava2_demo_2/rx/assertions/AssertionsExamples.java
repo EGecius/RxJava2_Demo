@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.assertions;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import io.reactivex.Observable;
 
 public class AssertionsExamples {

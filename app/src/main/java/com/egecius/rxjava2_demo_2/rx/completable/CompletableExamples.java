@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.completable;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,6 +128,24 @@ public class CompletableExamples {
                 .andThen(secondCompletable())
                 .andThen(Completable.error(ERROR_2))
                 .andThen(thirdCompletable());
+    }
+
+    Completable fromActionComplete() {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                list.add(FIRST_COMPLETABLE);
+            }
+        });
+    }
+
+    Completable fromActionError() {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                throw new EgisException();
+            }
+        });
     }
 
 }

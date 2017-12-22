@@ -1,10 +1,14 @@
-package com.egecius.rxjava2_demo_2.rx.assertions;
+package com.egecius.rxjava2_demo_2.rx;
 
-class EgisException extends Exception {
+public class EgisException extends Exception {
 
     private final String message;
 
-    EgisException(String message) {
+    public EgisException() {
+        message = null;
+    }
+
+    public EgisException(String message) {
         super(message);
         this.message = message;
     }

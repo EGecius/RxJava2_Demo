@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static java.util.Arrays.asList;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

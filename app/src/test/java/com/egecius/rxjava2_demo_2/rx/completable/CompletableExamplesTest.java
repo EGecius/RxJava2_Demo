@@ -2,6 +2,8 @@ package com.egecius.rxjava2_demo_2.rx.completable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -128,6 +130,27 @@ public class CompletableExamplesTest {
     public void doesNotExecutePathBWhenNotSubscribed() {
         mSut.divergingPathWithMaybeB();
 
+        List<String> list = mSut.list;
+        assertThat(list).isEmpty();
+    }
+
+    @Test
+    public void fromActionComplete() {
+        TestObserver<Void> testObserver = mSut.fromActionComplete().test();
+
+        testObserver
+                .assertComplete();
+        List<String> list = mSut.list;
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0)).isEqualTo(CompletableExamples.FIRST_COMPLETABLE);
+    }
+
+    @Test
+    public void fromActionError() {
+        TestObserver<Void> testObserver = mSut.fromActionError().test();
+
+        testObserver
+                .assertError(EgisException.class);
         List<String> list = mSut.list;
         assertThat(list).isEmpty();
     }
