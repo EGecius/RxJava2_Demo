@@ -164,4 +164,17 @@ public class MaybeExamplesTest {
         testObserver.assertError(EgisException.class);
     }
 
+    @Ignore // I would expect this test to pass - both methods should produce same result
+    @Test
+    public void flatMapCompletable_replaces_MaybeFirstElementIgnoreElement() {
+
+        TestObserver<Void> testObserver = mSut.flatMapCompletable().test();
+
+        testObserver.assertError(EgisException.class);
+
+        TestObserver<Void> testObserver2 = mSut.firstElementIgnoreElement().test();
+
+        testObserver2.assertComplete();
+    }
+
 }

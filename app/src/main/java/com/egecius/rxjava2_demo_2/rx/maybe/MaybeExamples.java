@@ -12,6 +12,7 @@ import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.subjects.BehaviorSubject;
 
 public class MaybeExamples {
 
@@ -101,6 +102,20 @@ public class MaybeExamples {
 
     Completable maybeIgnoreElementFromError() {
         return Maybe.error(new EgisException())
+                .ignoreElement();
+    }
+
+    Completable flatMapCompletable() {
+
+        BehaviorSubject<Boolean> behaviorSubject = BehaviorSubject.createDefault(true);
+        return behaviorSubject.flatMapCompletable(aBoolean -> Completable.complete());
+    }
+
+    Completable firstElementIgnoreElement() {
+
+        BehaviorSubject<Boolean> behaviorSubject = BehaviorSubject.createDefault(true);
+        return behaviorSubject
+                .firstElement()
                 .ignoreElement();
     }
 }
