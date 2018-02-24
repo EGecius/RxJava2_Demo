@@ -2,6 +2,8 @@ package com.egecius.rxjava2_demo_2.rx.maybe;
 
 import android.support.annotation.Nullable;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -89,4 +91,16 @@ public class MaybeExamples {
                 .flatMapSingle(integer -> Single.just(String.valueOf(integer)));
     }
 
+    Completable maybeIgnoreElementFromSuccess() {
+        return Maybe.just(5).ignoreElement();
+    }
+
+    Completable maybeIgnoreElementFromEmpty() {
+        return Maybe.empty().ignoreElement();
+    }
+
+    Completable maybeIgnoreElementFromError() {
+        return Maybe.error(new EgisException())
+                .ignoreElement();
+    }
 }

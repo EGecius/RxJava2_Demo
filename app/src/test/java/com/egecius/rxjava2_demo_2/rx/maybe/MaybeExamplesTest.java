@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static java.util.Arrays.asList;
 
+import com.egecius.rxjava2_demo_2.rx.EgisException;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -139,6 +141,27 @@ public class MaybeExamplesTest {
         testObserver
                 .assertComplete()
                 .assertNoValues();
+    }
+
+    @Test
+    public void maybeIgnoreElementFromSuccess() {
+        TestObserver<Void> testObserver = mSut.maybeIgnoreElementFromSuccess().test();
+
+        testObserver.assertComplete();
+    }
+
+    @Test
+    public void maybeIgnoreElementFromEmpty() {
+        TestObserver<Void> testObserver = mSut.maybeIgnoreElementFromEmpty().test();
+
+        testObserver.assertComplete();
+    }
+
+    @Test
+    public void maybeIgnoreElementFromError() {
+        TestObserver<Void> testObserver = mSut.maybeIgnoreElementFromError().test();
+
+        testObserver.assertError(EgisException.class);
     }
 
 }
