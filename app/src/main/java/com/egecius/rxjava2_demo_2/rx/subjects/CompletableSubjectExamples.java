@@ -6,18 +6,18 @@ import io.reactivex.subjects.CompletableSubject;
 
 public class CompletableSubjectExamples {
 
-    private CompletableSubject mCompletableSubject = CompletableSubject.create();
+    private final CompletableSubject mCompletableSubject = CompletableSubject.create();
 
     public CompletableSubject getCompletableSubject() {
         return mCompletableSubject;
     }
 
-    void emit2Errors() {
-        mCompletableSubject.onError(new EgisException());
+    void emit1Error() {
         mCompletableSubject.onError(new EgisException());
     }
 
-    void emit1Error() {
+    void emit2Errors() {
+        mCompletableSubject.onError(new EgisException());
         mCompletableSubject.onError(new EgisException());
     }
 }
