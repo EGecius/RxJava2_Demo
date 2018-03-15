@@ -15,4 +15,9 @@ public class MaybeSubjectExamples {
     void emitSingleError() {
         mMaybeSubject.onError(new EgisException());
     }
+
+    void emit2Errors() {
+        mMaybeSubject.onError(new EgisException());
+        mMaybeSubject.onError(new EgisException());
+    }
 }
