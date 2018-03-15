@@ -40,4 +40,12 @@ public class CompletableSubjectExamplesTest {
         testObserver.assertError(EgisException.class);
     }
 
+    @Test
+    public void completableSubjectSubscribesToAnotherCompletable() {
+        TestObserver<Void> testObserver = mSut.getCompletableSubject().test();
+        mSut.subscribeToAnother();
+
+        testObserver.assertError(EgisException.class);
+    }
+
 }
