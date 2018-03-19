@@ -1,16 +1,21 @@
 package com.egecius.rxjava2_demo_2.rx.completable;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 import com.egecius.rxjava2_demo_2.rx.EgisException;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.exceptions.misusing.CannotStubVoidMethodWithReturnValue;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.TestObserver;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -153,6 +158,16 @@ public class CompletableExamplesTest {
                 .assertError(EgisException.class);
         List<String> list = mSut.list;
         assertThat(list).isEmpty();
+    }
+
+    @Test (expected = CannotStubVoidMethodWithReturnValue.class)
+    public void mockingCompletableSubscribeDoesNotWork() {
+
+        Completable completable = mock(Completable.class);
+        Disposable disposable = mock(Disposable.class);
+
+        // the reason why it does not work is that 'subscribe()' itself is final
+        given(completable.subscribe()).willReturn(disposable);
     }
 
 }
