@@ -3,6 +3,7 @@ package com.egecius.rxjava2_demo_2.rx.subjects;
 import java.util.List;
 
 import io.reactivex.subjects.BehaviorSubject;
+import io.reactivex.subjects.Subject;
 
 public class BehaviorSubjectExamples {
 
@@ -40,5 +41,9 @@ public class BehaviorSubjectExamples {
         subject.onError(exception);
 
         return subject;
+    }
+
+    void callsToSerialized() {
+        Subject<Object> subject = BehaviorSubject.create().toSerialized();
     }
 }
