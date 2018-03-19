@@ -106,14 +106,27 @@ public class MaybeExamples {
     }
 
     Completable flatMapCompletable() {
-
-        BehaviorSubject<Boolean> behaviorSubject = BehaviorSubject.createDefault(true);
+        BehaviorSubject<Boolean> behaviorSubject = getBehaviorSubjectWithDefault();
         return behaviorSubject.flatMapCompletable(aBoolean -> Completable.complete());
     }
 
-    Completable firstElementIgnoreElement() {
+    Completable flatMapCompletableWithEmission() {
+        BehaviorSubject<Boolean> behaviorSubject = getBehaviorSubjectWithDefault();
+        behaviorSubject.onNext(true);
+        Completable flatMapCompletable = behaviorSubject.flatMapCompletable(
+                aBoolean -> Completable.complete());
 
-        BehaviorSubject<Boolean> behaviorSubject = BehaviorSubject.createDefault(true);
+        behaviorSubject.onNext(true);
+
+        return flatMapCompletable;
+    }
+
+    BehaviorSubject<Boolean> getBehaviorSubjectWithDefault() {
+        return BehaviorSubject.createDefault(true);
+    }
+
+    Completable firstElementIgnoreElement() {
+        BehaviorSubject<Boolean> behaviorSubject = getBehaviorSubjectWithDefault();
         return behaviorSubject
                 .firstElement()
                 .ignoreElement();

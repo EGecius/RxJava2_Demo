@@ -164,6 +164,14 @@ public class MaybeExamplesTest {
         testObserver.assertError(EgisException.class);
     }
 
+    @Test
+    public void getBehaviorSubjectWithDefault() {
+        TestObserver<Boolean> testObserver = mSut.getBehaviorSubjectWithDefault().test();
+
+        testObserver.assertValue(true);
+        testObserver.assertNotComplete();
+    }
+
     @Ignore // I would expect this test to pass - both methods should produce same result
     @Test
     public void flatMapCompletable_replaces_MaybeFirstElementIgnoreElement() {
@@ -175,6 +183,16 @@ public class MaybeExamplesTest {
         TestObserver<Void> testObserver2 = mSut.firstElementIgnoreElement().test();
 
         testObserver2.assertComplete();
+    }
+
+
+    @Ignore // I would expect this test to pass - both methods should produce same result
+    @Test
+    public void flatMapCompletableWithEmission() {
+
+        TestObserver<Void> testObserver = mSut.flatMapCompletableWithEmission().test();
+
+        testObserver.assertComplete();
     }
 
 }
