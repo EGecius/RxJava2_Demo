@@ -46,7 +46,7 @@ public class MaybeExamplesTest {
 	}
 
 	@Test
-	public void defaultIfEmptyRetunrsExpectedValue() {
+	public void defaultIfEmptyReturnsExpectedValue() {
         TestObserver<Integer> testObserver = mSut.defaultIfEmpty(5).test();
 
         testObserver
