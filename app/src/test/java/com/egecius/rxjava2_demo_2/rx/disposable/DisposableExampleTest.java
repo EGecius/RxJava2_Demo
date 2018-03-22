@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.egecius.rxjava2_demo_2.rx.EgisException;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -60,6 +61,20 @@ public class DisposableExampleTest {
         disposableObserver.onComplete();
 
         assertThat(mSut.isOnCompleteCalled()).isTrue();
+    }
+
+    @Ignore //not sure why this test fails. I would expect no emissions to occur after disposing it
+    @Test
+    public void doesNotEmitAnythingAfterDisposing() {
+        DisposableObserver<Integer> disposableObserver = mSut.createDisposableObserver();
+        assertNoEventsYet();
+
+        disposableObserver.dispose();
+        disposableObserver.onComplete();
+        disposableObserver.onError(new EgisException());
+        disposableObserver.onNext(13);
+
+        assertNoEventsYet();
     }
 
 }
