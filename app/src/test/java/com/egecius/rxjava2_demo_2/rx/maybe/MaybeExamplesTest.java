@@ -15,6 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Collections;
 import java.util.NoSuchElementException;
 
+import io.reactivex.Completable;
 import io.reactivex.observers.TestObserver;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -34,6 +35,8 @@ public class MaybeExamplesTest {
 		testObserver
 				.assertComplete()
 				.assertValues(1);
+
+		Completable.complete();
 	}
 
 	@Test
