@@ -37,7 +37,8 @@ public class ComposeExamples {
         return new ObservableTransformer<String, String>() {
             @Override
             public ObservableSource<String> apply(Observable<String> upstream) {
-                return upstream.map(string -> string + string + string);
+                return upstream
+                        .map(string -> string + string + string);
             }
         };
     }
