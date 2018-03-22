@@ -1,7 +1,5 @@
 package com.egecius.rxjava2_demo_2.rx.startWith;
 
-import static android.R.id.list;
-
 import java.util.List;
 
 import io.reactivex.Observable;
