@@ -1,5 +1,7 @@
 package com.egecius.rxjava2_demo_2.rx.conditional;
 
+import static java.util.Arrays.asList;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,5 +26,24 @@ public class ConditionalExamplesTest {
 
         testObserver.assertResult(1, 2);
     }
+
+    @Test
+    public void switchIfEmptyProvidesDefaultForEmptyStream() {
+
+        TestObserver<Integer> testObserver
+                = mSut.switchIfEmptyForEmptyStream(asList(1, 2, 3)).test();
+
+        testObserver.assertResult(1, 2, 3);
+    }
+
+    @Test
+    public void switchIfEmptyDefaultIsIgnoredForNonEmptyStream() {
+        TestObserver<Integer> testObserver
+                = mSut.switchIfEmptyForNonEmptyStream(asList(1, 2, 3)).test();
+
+        testObserver.assertResult(1);
+
+    }
+
 
 }
