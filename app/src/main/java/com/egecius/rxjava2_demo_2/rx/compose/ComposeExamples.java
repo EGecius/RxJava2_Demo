@@ -8,28 +8,17 @@ import io.reactivex.ObservableTransformer;
 
 public class ComposeExamples {
 
-    Observable<String> doubleAndConvertToString(int item) {
-        return Observable
-                .just(item)
-                .compose(doubleAndConvertToString());
-    }
-
-    private ObservableTransformer<Integer, String> doubleAndConvertToString() {
-        return new ObservableTransformer<Integer, String>() {
-            @Override
-            public ObservableSource<String> apply(Observable<Integer> upstream) {
-                return upstream
-                        .map(integer -> integer * 2)
-                        .map(String::valueOf);
-            }
-        };
-    }
-
     Observable<String> doubleAndConvertToStringRepeatedThrice(int item) {
         return Observable
                 .just(item)
                 .compose(doubleAndConvertToString())
                 .compose(repeatThrice());
+    }
+
+    Observable<String> doubleAndConvertToString(int item) {
+        return Observable
+                .just(item)
+                .compose(doubleAndConvertToString());
     }
 
     @NonNull
@@ -39,6 +28,17 @@ public class ComposeExamples {
             public ObservableSource<String> apply(Observable<String> upstream) {
                 return upstream
                         .map(string -> string + string + string);
+            }
+        };
+    }
+
+    private ObservableTransformer<Integer, String> doubleAndConvertToString() {
+        return new ObservableTransformer<Integer, String>() {
+            @Override
+            public ObservableSource<String> apply(Observable<Integer> upstream) {
+                return upstream
+                        .map(integer -> integer * 2)
+                        .map(String::valueOf);
             }
         };
     }
