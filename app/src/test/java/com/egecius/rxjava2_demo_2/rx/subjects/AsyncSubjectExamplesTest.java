@@ -1,7 +1,5 @@
 package com.egecius.rxjava2_demo_2.rx.subjects;
 
-import static com.egecius.rxjava2_demo_2.rx.subjects.AsyncSubjectExamples.ASYNC_EXCEPTION;
-
 import static java.util.Arrays.asList;
 
 import org.junit.Before;
@@ -47,7 +45,7 @@ public class AsyncSubjectExamplesTest {
 
         testObserver
                 .assertNoValues()
-                .assertError(ASYNC_EXCEPTION);
+                .assertError(AsyncSubjectExamples.Companion.getASYNC_EXCEPTION());
     }
 
     @Test
