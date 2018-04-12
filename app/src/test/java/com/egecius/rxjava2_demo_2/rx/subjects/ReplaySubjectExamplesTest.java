@@ -59,7 +59,7 @@ public class ReplaySubjectExamplesTest {
                 .assertValues(2, 3);
     }
 
-    @Test
+    @Test @Ignore
     public void createWithTime() throws InterruptedException {
         ReplaySubject<String> subject = mSut.createWithTime();
 
