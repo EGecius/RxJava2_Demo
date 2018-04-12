@@ -1,5 +1,6 @@
 package com.egecius.rxjava2_demo_2.rx.assertions.await;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.TimeUnit;
@@ -70,7 +71,7 @@ public class AwaitExamplesTest {
         testObserver.assertResult(1, 2, 3);
     }
 
-    @Test
+    @Test @Ignore
     public void clearTimeout() throws InterruptedException {
         TestObserver<Integer> testObserver = Observable
                 .just(1, 2, 3)
