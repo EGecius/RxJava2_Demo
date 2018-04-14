@@ -24,7 +24,7 @@ class CompletableExamplesTest {
 
     @Test
     fun andThen() {
-        val testObserver = mSut!!.andThen().test()
+        val testObserver = mSut!!.demoAndThen().test()
 
         testObserver
                 .assertComplete()

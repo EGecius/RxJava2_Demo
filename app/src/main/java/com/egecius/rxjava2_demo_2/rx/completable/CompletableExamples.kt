@@ -10,18 +10,14 @@ import java.util.*
 class CompletableExamples {
 
     internal var list: MutableList<String> = ArrayList()
-
-    private val maybeA: Maybe<Path>
-        get() = Maybe.just(Path.A)
-
-    private val maybeB: Maybe<Path>
-        get() = Maybe.just(Path.B)
+    private val maybeA: Maybe<Path> = Maybe.just(Path.A)
+    private val maybeB: Maybe<Path> = Maybe.just(Path.B)
 
     internal enum class Path {
         A, B
     }
 
-    internal fun andThen(): Completable {
+    internal fun demoAndThen(): Completable {
         return firstCompletable()
                 .andThen(secondCompletable())
                 .andThen(thirdCompletable())
