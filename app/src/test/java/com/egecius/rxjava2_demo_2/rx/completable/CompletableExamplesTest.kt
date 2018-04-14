@@ -15,7 +15,7 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CompletableExamplesTest {
 
-    private var mSut: CompletableExamples? = null
+    lateinit var mSut: CompletableExamples
 
     @Before
     fun setUp() {
@@ -24,12 +24,12 @@ class CompletableExamplesTest {
 
     @Test
     fun andThen() {
-        val testObserver = mSut!!.demoAndThen().test()
+        val testObserver = mSut.demoAndThen().test()
 
         testObserver
                 .assertComplete()
 
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(3)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.SECOND_COMPLETABLE)
@@ -38,11 +38,11 @@ class CompletableExamplesTest {
 
     @Test
     fun doOnCompleteAndThen() {
-        val testObserver = mSut!!.doOnCompleteAndThen().test()
+        val testObserver = mSut.doOnCompleteAndThen().test()
 
         testObserver
                 .assertComplete()
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(5)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.DO_ON_COMPLETE_A)
@@ -53,12 +53,12 @@ class CompletableExamplesTest {
 
     @Test
     fun divergingPaths_A() {
-        val testObserver = mSut!!.divergingPaths(CompletableExamples.Path.A).test()
+        val testObserver = mSut.divergingPaths(CompletableExamples.Path.A).test()
 
         testObserver
                 .assertComplete()
 
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(3)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.SECOND_COMPLETABLE)
@@ -67,11 +67,11 @@ class CompletableExamplesTest {
 
     @Test
     fun divergingPaths_B() {
-        val testObserver = mSut!!.divergingPaths(CompletableExamples.Path.B).test()
+        val testObserver = mSut.divergingPaths(CompletableExamples.Path.B).test()
 
         testObserver
                 .assertComplete()
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(3)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.SECOND_COMPLETABLE)
@@ -80,11 +80,11 @@ class CompletableExamplesTest {
 
     @Test
     fun divergingPathWithMaybeA() {
-        val testObserver = mSut!!.divergingPathWithMaybeA().test()
+        val testObserver = mSut.divergingPathWithMaybeA().test()
 
         testObserver
                 .assertComplete()
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(3)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.SECOND_COMPLETABLE)
@@ -93,11 +93,11 @@ class CompletableExamplesTest {
 
     @Test
     fun divergingPathWithMaybeB() {
-        val testObserver = mSut!!.divergingPathWithMaybeB().test()
+        val testObserver = mSut.divergingPathWithMaybeB().test()
 
         testObserver
                 .assertComplete()
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(3)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
         assertThat(list[1]).isEqualTo(CompletableExamples.SECOND_COMPLETABLE)
@@ -106,51 +106,51 @@ class CompletableExamplesTest {
 
     @Test
     fun andThenWithErrors() {
-        val testObserver = mSut!!.andThenWithErrors().test()
+        val testObserver = mSut.andThenWithErrors().test()
 
         testObserver
                 .assertNotComplete()
                 .assertNoValues()
                 .assertError(CompletableExamples.ERROR_1)
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(1)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
     }
 
     @Test
     fun doesNotExecutePathAWhenNotSubscribed() {
-        mSut!!.divergingPathWithMaybeA()
+        mSut.divergingPathWithMaybeA()
 
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list).isEmpty()
     }
 
     @Test
     fun doesNotExecutePathBWhenNotSubscribed() {
-        mSut!!.divergingPathWithMaybeB()
+        mSut.divergingPathWithMaybeB()
 
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list).isEmpty()
     }
 
     @Test
     fun fromActionComplete() {
-        val testObserver = mSut!!.fromActionComplete().test()
+        val testObserver = mSut.fromActionComplete().test()
 
         testObserver
                 .assertComplete()
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list.size).isEqualTo(1)
         assertThat(list[0]).isEqualTo(CompletableExamples.FIRST_COMPLETABLE)
     }
 
     @Test
     fun fromActionError() {
-        val testObserver = mSut!!.fromActionError().test()
+        val testObserver = mSut.fromActionError().test()
 
         testObserver
                 .assertError(EgisException::class.java)
-        val list = mSut!!.list
+        val list = mSut.list
         assertThat(list).isEmpty()
     }
 
