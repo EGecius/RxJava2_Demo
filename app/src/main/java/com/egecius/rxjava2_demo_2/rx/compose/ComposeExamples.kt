@@ -19,6 +19,13 @@ class ComposeExamples {
                     .map { it * 2 }
                     .map { it.toString() }
         }
+
+        // alternative in full form
+        //        return ObservableTransformer<Int, String> { upstream ->
+//                  upstream
+//                    .map ( Function<Int, Int>(){ integer: Int -> integer * 2 })
+//                    .map ( Function<Int, String>(){ it.toString() })
+//        }
     }
 
     internal fun doubleAndConvertToStringRepeatedThrice(item: Int): Observable<String> {
