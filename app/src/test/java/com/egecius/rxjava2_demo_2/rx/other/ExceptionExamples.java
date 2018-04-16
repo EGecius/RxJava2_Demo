@@ -14,7 +14,7 @@ public class ExceptionExamples {
     @Test(expected = RuntimeException.class)
     public void failsWhenExceptionIsThrownInOnSuccess() {
 
-        TestingUtils.setUncaughtExceptionsHandlerAsStrict();
+        TestingUtils.INSTANCE.setUncaughtExceptionsHandlerAsStrict();
 
         Completable.complete()
                 .subscribe(() -> {
@@ -25,7 +25,7 @@ public class ExceptionExamples {
     @Test
     public void succeedsWhenExceptionIsThrownInOnError() {
 
-        TestingUtils.setUncaughtExceptionsHandlerAsStrict();
+        TestingUtils.INSTANCE.setUncaughtExceptionsHandlerAsStrict();
 
         Completable.complete()
                 .subscribe(() -> {
