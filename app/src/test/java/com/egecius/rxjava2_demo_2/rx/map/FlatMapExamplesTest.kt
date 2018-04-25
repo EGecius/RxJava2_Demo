@@ -41,7 +41,7 @@ class FlatMapExamplesTest {
 
     @Test
     fun flatmaps_onSingle() {
-        val testObserver = mSut!!.flatmapOnSingle(69).test()
+        val testObserver = mSut!!.flatMapOnSingle(69).test()
 
         testObserver.assertComplete()
         val values = testObserver.values()

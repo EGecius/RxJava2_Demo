@@ -2,7 +2,6 @@ package com.egecius.rxjava2_demo_2.rx.map
 
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.SingleSource
 import io.reactivex.functions.Function
 
 class FlatMapExamples {
@@ -18,31 +17,19 @@ class FlatMapExamples {
         return Observable.fromIterable(list)
     }
 
-    fun flatmapOnSingle(integerOuter: Int?): Single<String> {
-        return Single.just(integerOuter!!)
-                .flatMap(object : Function<Int, SingleSource<String>> {
-                    override fun apply(integerInner: Int): SingleSource<String> {
-                        return Single.just(integerInner.toString())
-                    }
-                })
+    fun flatMapOnSingle(integerOuter: Int): Single<String> {
+        return Single.just(integerOuter)
+                .flatMap { integerInner -> Single.just(integerInner.toString()) }
     }
 
-    fun flatMapOneToOne(integer: Int?): Observable<String> {
-        return Observable.just(integer!!)
-                .flatMap(object : Function<Int, Observable<String>> {
-                    override fun apply(integer: Int): Observable<String> {
-                        return Observable.just(integer.toString())
-                    }
-                })
+    fun flatMapOneToOne(integer: Int): Observable<String> {
+        return Observable.just(integer)
+                .flatMap { Observable.just(it.toString()) }
     }
 
-    fun flatMapOneToNone(integer: Int?): Observable<String> {
-        return Observable.just(integer!!)
-                .flatMap(object : Function<Int, Observable<String>> {
-                    override fun apply(integer: Int): Observable<String> {
-                        return Observable.empty()
-                    }
-                })
+    fun flatMapOneToNone(integer: Int): Observable<String> {
+        return Observable.just(integer)
+                .flatMap { Observable.empty<String>() }
     }
 
     fun flatMapOneToSometimes(list: List<Int>): Observable<Int> {
