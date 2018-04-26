@@ -9,7 +9,7 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class ExceptionExamples {
+public class ExceptionExamplesTest {
 
     @Test(expected = RuntimeException.class)
     public void failsWhenExceptionIsThrownInOnSuccess() {
