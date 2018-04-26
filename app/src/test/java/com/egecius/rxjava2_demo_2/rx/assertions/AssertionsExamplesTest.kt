@@ -5,21 +5,13 @@ import io.reactivex.Observable
 import io.reactivex.functions.Predicate
 import io.reactivex.observers.TestObserver
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 import java.util.Arrays.asList
 
-@RunWith(MockitoJUnitRunner::class)
 class AssertionsExamplesTest {
-    private var mSut: AssertionsExamples? = null
 
-    @Before
-    fun setUp() {
-        mSut = AssertionsExamples()
-    }
+    private var mSut = AssertionsExamples()
 
     @Test
     fun assertNotSubscribed() {
@@ -30,7 +22,7 @@ class AssertionsExamplesTest {
 
     @Test
     fun assertSubscribed() {
-        val testObserver = mSut!!.just.test()
+        val testObserver = mSut.just.test()
 
         testObserver.assertSubscribed()
     }
@@ -122,36 +114,36 @@ class AssertionsExamplesTest {
 
     @Test
     fun assertFailure() {
-        val testObserver = mSut!!.emitThreeIntegersAndFail().test()
+        val testObserver = mSut.emitThreeIntegersAndFail().test()
 
         testObserver.assertFailure(EgisException::class.java, 0, 1, 2)
     }
 
     @Test
     fun assertFailure2() {
-        val testObserver = mSut!!.emitThreeIntegersAndFail().test()
+        val testObserver = mSut.emitThreeIntegersAndFail().test()
 
-        testObserver.assertFailure(Predicate { throwable -> throwable === mSut!!.exception }, 0, 1, 2)
+        testObserver.assertFailure(Predicate { throwable -> throwable === mSut.exception }, 0, 1, 2)
     }
 
     @Test
     fun assertFailureAndMessage() {
-        val testObserver = mSut!!.emitThreeIntegersAndFail().test()
+        val testObserver = mSut.emitThreeIntegersAndFail().test()
 
-        testObserver.assertFailureAndMessage(EgisException::class.java, mSut!!.exceptionMessage, 0, 1,
+        testObserver.assertFailureAndMessage(EgisException::class.java, mSut.exceptionMessage, 0, 1,
                 2)
     }
 
     @Test
     fun assertNever() {
-        val testObserver = mSut!!.emitThreeIntegersAndFail().test()
+        val testObserver = mSut.emitThreeIntegersAndFail().test()
 
         testObserver.assertNever(-1)
     }
 
     @Test(expected = AssertionError::class)
     fun assertNever2() {
-        val testObserver = mSut!!.emitThreeIntegersAndFail().test()
+        val testObserver = mSut.emitThreeIntegersAndFail().test()
 
         testObserver.assertNever(0)
     }
@@ -173,14 +165,14 @@ class AssertionsExamplesTest {
 
     @Test(expected = AssertionError::class)
     fun assertResult2() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertResult(1, 2)
     }
 
     @Test
     fun assertValues() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValues(1, 2)
     }
@@ -188,28 +180,28 @@ class AssertionsExamplesTest {
 
     @Test
     fun assertValueAt() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueAt(1, 2)
     }
 
     @Test(expected = AssertionError::class)
     fun assertValueAt2() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueAt(0, 0)
     }
 
     @Test(expected = AssertionError::class)
     fun assertValueAt3() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueAt(2, 2)
     }
 
     @Test
     fun assertValueSequence() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueSequence(asList(1, 2))
     }
@@ -217,14 +209,14 @@ class AssertionsExamplesTest {
     // fails when same order is not maintained
     @Test(expected = AssertionError::class)
     fun assertValueSequence2() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueSequence(asList(2, 1))
     }
 
     @Test
     fun assertValueSet() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueSet(asList(1, 2))
     }
@@ -232,14 +224,14 @@ class AssertionsExamplesTest {
     // assertValueSet takes Collection in any order
     @Test
     fun assertValueSet2() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValueSet(asList(2, 1))
     }
 
     @Test
     fun assertValuesOnly() {
-        val testObserver = mSut!!.emitWithoutCompletion(1, 2).test()
+        val testObserver = mSut.emitWithoutCompletion(1, 2).test()
 
         testObserver.assertValuesOnly(1, 2)
     }
@@ -258,7 +250,7 @@ class AssertionsExamplesTest {
         assertThat(testObserver.completions()).isEqualTo(1)
     }
 
-    // TODO: 06/12/2017 can one Obseerver subscribe to multiple Observables?
+    // TODO: 06/12/2017 can one Observer subscribe to multiple Observables?
     @Test
     @Ignore // I thought this would work but it does not.
     fun completion2() {
@@ -338,7 +330,7 @@ class AssertionsExamplesTest {
 
     companion object {
 
-        private val EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE"
+        private const val EXCEPTION_MESSAGE = "EXCEPTION_MESSAGE"
     }
 
 }
