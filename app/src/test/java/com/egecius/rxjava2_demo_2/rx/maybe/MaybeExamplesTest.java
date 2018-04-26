@@ -68,40 +68,40 @@ public class MaybeExamplesTest {
 
     @Test
     public void maybeFlatMapCompletable_withEmpty() {
-        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+        assertThat(mSut.isFlatMapCompletableExecuted()).isFalse();
 
         mSut.maybeFlatMapCompletable(Collections.EMPTY_LIST).test();
 
-        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+        assertThat(mSut.isFlatMapCompletableExecuted()).isFalse();
     }
 
     @Test
     public void maybeFlatMapCompletable_withNonEmpty() {
-        assertThat(mSut.isFlatMapCompletableExecuted).isFalse();
+        assertThat(mSut.isFlatMapCompletableExecuted()).isFalse();
 
         mSut.maybeFlatMapCompletable(asList(1)).test();
 
-        assertThat(mSut.isFlatMapCompletableExecuted).isTrue();
+        assertThat(mSut.isFlatMapCompletableExecuted()).isTrue();
     }
 
     // TODO: 03/11/2017 fix text
     @Ignore
     @Test
     public void maybeFlatMapCompletableAndThen_withEmpty() {
-        assertThat(mSut.isAndThenExecuted).isFalse();
+        assertThat(mSut.isAndThenExecuted()).isFalse();
 
         mSut.maybeFlatMapCompletableAndThen(Collections.EMPTY_LIST).test();
 
-        assertThat(mSut.isAndThenExecuted).isFalse();
+        assertThat(mSut.isAndThenExecuted()).isFalse();
     }
 
     @Test
     public void maybeFlatMapCompletableAndThen_withNonEmpty() {
-        assertThat(mSut.isAndThenExecuted).isFalse();
+        assertThat(mSut.isAndThenExecuted()).isFalse();
 
         mSut.maybeFlatMapCompletableAndThen(asList(1)).test();
 
-        assertThat(mSut.isAndThenExecuted).isTrue();
+        assertThat(mSut.isAndThenExecuted()).isTrue();
     }
 
     @Test
