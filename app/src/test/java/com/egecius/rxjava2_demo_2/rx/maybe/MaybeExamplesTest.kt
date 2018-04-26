@@ -1,7 +1,6 @@
 package com.egecius.rxjava2_demo_2.rx.maybe
 
 import com.egecius.rxjava2_demo_2.rx.EgisException
-import io.reactivex.Completable
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Ignore
 import org.junit.Test
@@ -19,8 +18,6 @@ class MaybeExamplesTest {
         testObserver
                 .assertComplete()
                 .assertValues(1)
-
-        Completable.complete()
     }
 
     @Test
@@ -169,7 +166,6 @@ class MaybeExamplesTest {
 
         testObserver2.assertComplete()
     }
-
 
     @Ignore // I would expect this test to pass - both methods should produce same result
     @Test
