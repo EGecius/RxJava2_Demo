@@ -8,7 +8,7 @@ import java.util.*
 
 class MaybeExamples {
 
-     var isFlatMapCompletableExecuted: Boolean = false
+    var isFlatMapCompletableExecuted: Boolean = false
     var isAndThenExecuted: Boolean = false
 
     private val completable: CompletableSource
@@ -17,7 +17,7 @@ class MaybeExamples {
             return Completable.complete()
         }
 
-     val behaviorSubjectWithDefault: BehaviorSubject<Boolean>
+    val behaviorSubjectWithDefault: BehaviorSubject<Boolean>
         get() = BehaviorSubject.createDefault(true)
 
     fun maybeToSingle(param: Int?): Single<Int> {
@@ -92,21 +92,21 @@ class MaybeExamples {
         return Maybe.just(5).ignoreElement()
     }
 
-     fun maybeIgnoreElementFromEmpty(): Completable {
+    fun maybeIgnoreElementFromEmpty(): Completable {
         return Maybe.empty<Any>().ignoreElement()
     }
 
-     fun maybeIgnoreElementFromError(): Completable {
+    fun maybeIgnoreElementFromError(): Completable {
         return Maybe.error<Any>(EgisException())
                 .ignoreElement()
     }
 
-     fun flatMapCompletable(): Completable {
+    fun flatMapCompletable(): Completable {
         val behaviorSubject = behaviorSubjectWithDefault
         return behaviorSubject.flatMapCompletable { aBoolean -> Completable.complete() }
     }
 
-     fun flatMapCompletableWithEmission(): Completable {
+    fun flatMapCompletableWithEmission(): Completable {
         val behaviorSubject = behaviorSubjectWithDefault
         behaviorSubject.onNext(true)
         val flatMapCompletable = behaviorSubject.flatMapCompletable { aBoolean -> Completable.complete() }
@@ -116,7 +116,7 @@ class MaybeExamples {
         return flatMapCompletable
     }
 
-     fun firstElementIgnoreElement(): Completable {
+    fun firstElementIgnoreElement(): Completable {
         val behaviorSubject = behaviorSubjectWithDefault
         return behaviorSubject
                 .firstElement()
