@@ -7,15 +7,14 @@ import io.reactivex.Single
 import io.reactivex.annotations.NonNull
 import io.reactivex.functions.Consumer
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
 
-@RunWith(MockitoJUnitRunner::class)
 class ErrorExamplesTest {
 
     private fun setCrashingUncaughtExceptionHandler() {
-        Thread.currentThread().setUncaughtExceptionHandler { thread, throwable -> throw IllegalStateException(throwable) }
+        Thread.currentThread().setUncaughtExceptionHandler({ _, throwable ->
+            throw IllegalStateException(throwable)
+        })
     }
 
     // when error is emitted but onError does not get implemented, execution does not crash on
