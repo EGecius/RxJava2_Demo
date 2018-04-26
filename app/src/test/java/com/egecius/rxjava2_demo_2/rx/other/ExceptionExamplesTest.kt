@@ -25,8 +25,8 @@ class ExceptionExamplesTest {
 
         Completable.complete()
                 .subscribe({
-                    //do nothing
-                }) { throwable -> throw RuntimeException() }
+                    //do nothing on complete
+                }, { throw RuntimeException() })
     }
 
     @Test(expected = RuntimeException::class)
