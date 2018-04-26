@@ -72,8 +72,8 @@ class MaybeExamples {
                 .map { it.toString() }
     }
 
-    private fun isEven(integer: Int?): Boolean {
-        return integer!! % 2 == 0
+    private fun isEven(integer: Int): Boolean {
+        return integer % 2 == 0
     }
 
     /** flatMapSingle fails with [NoSuchElementException] when it receives no value, i.e.
@@ -100,13 +100,13 @@ class MaybeExamples {
 
     fun flatMapCompletable(): Completable {
         val behaviorSubject = behaviorSubjectWithDefault
-        return behaviorSubject.flatMapCompletable { aBoolean -> Completable.complete() }
+        return behaviorSubject.flatMapCompletable { Completable.complete() }
     }
 
     fun flatMapCompletableWithEmission(): Completable {
         val behaviorSubject = behaviorSubjectWithDefault
         behaviorSubject.onNext(true)
-        val flatMapCompletable = behaviorSubject.flatMapCompletable { aBoolean -> Completable.complete() }
+        val flatMapCompletable = behaviorSubject.flatMapCompletable { Completable.complete() }
 
         behaviorSubject.onNext(true)
 
