@@ -8,8 +8,8 @@ import java.util.*
 
 class MaybeExamples {
 
-    var isFlatMapCompletableExecuted: Boolean = false
-    var isAndThenExecuted: Boolean = false
+    var isFlatMapCompletableExecuted = false
+    var isAndThenExecuted = false
 
     private val completable: CompletableSource
         get() {
@@ -17,13 +17,12 @@ class MaybeExamples {
             return Completable.complete()
         }
 
-    val behaviorSubjectWithDefault: BehaviorSubject<Boolean>
-        get() = BehaviorSubject.createDefault(true)
+    val behaviorSubjectWithDefault = BehaviorSubject.createDefault(true)!!
 
-    fun maybeToSingle(param: Int?): Single<Int> {
+    fun maybeToSingle(param: Int): Single<Int> {
 
-        return Maybe.just(param!!)
-                .filter { integer -> integer < 5 }
+        return Maybe.just(param)
+                .filter { it < 5 }
                 .toSingle()
     }
 
@@ -33,12 +32,10 @@ class MaybeExamples {
      */
     fun defaultIfEmpty(param: Int?): Single<Int> {
 
-        val maybe: Maybe<Int>
-
-        if (param == null) {
-            maybe = Maybe.empty()
+        val maybe: Maybe<Int> = if (param == null) {
+            Maybe.empty()
         } else {
-            maybe = Maybe.just(param)
+            Maybe.just(param)
         }
 
         return maybe
@@ -50,7 +47,7 @@ class MaybeExamples {
     fun maybeFlatMapCompletable(integers: Iterable<Int>): Completable {
         return Observable.fromIterable(integers)
                 .firstElement()
-                .flatMapCompletable { integer -> completable }
+                .flatMapCompletable { completable }
     }
 
     /** andThen() gets executed even if Function in flatMapCompletable() before it did not get
@@ -58,7 +55,7 @@ class MaybeExamples {
     fun maybeFlatMapCompletableAndThen(integers: Iterable<Int>): Completable {
         return Observable.fromIterable(integers)
                 .firstElement()
-                .flatMapCompletable { integer -> completable }
+                .flatMapCompletable { completable }
                 .andThen(myAndThen())
     }
 
@@ -71,8 +68,8 @@ class MaybeExamples {
 
         return Observable.fromIterable(list)
                 .firstElement()
-                .filter({ this.isEven(it) })
-                .map({ it.toString() })
+                .filter { isEven(it) }
+                .map { it.toString() }
     }
 
     private fun isEven(integer: Int?): Boolean {
