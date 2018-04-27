@@ -20,11 +20,29 @@ class ComposeExamples {
                     .map { it.toString() }
         }
 
-        // alternative in full form
+        // alternative in longer form
 //        return ObservableTransformer<Int, String>() { upstream: Observable<Int> ->
 //            upstream
 //                    .map(Function<Int, Int>() { integer: Int -> integer * 2 })
 //                    .map(Function<Int, String>() { integer: Int -> integer.toString() })
+//        }
+
+        // in full form
+
+//        return object: ObservableTransformer<Int, String> {
+//            override fun apply(upstream: Observable<Int>): ObservableSource<String> {
+//                return upstream
+//                        .map(object: Function<Int, Int> {
+//                            override fun apply(integer: Int): Int {
+//                                return integer * 2
+//                            }
+//                        })
+//                        .map(object: Function<Int, String> {
+//                            override fun apply(integer: Int): String {
+//                                return integer.toString()
+//                            }
+//                        } )
+//            }
 //        }
     }
 
