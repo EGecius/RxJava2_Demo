@@ -3,10 +3,7 @@ package com.egecius.rxjava2_demo_2.rx.error
 import io.reactivex.Flowable
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class ErrorExamplesTest {
 
     private var mSut: ErrorExamples? = null
