@@ -41,7 +41,7 @@ class FlatMapExamplesTest {
 
     @Test
     fun flatmaps_onSingle() {
-        val testObserver = mSut!!.flatmapOnSingle(69).test()
+        val testObserver = mSut!!.flatMapOnSingle(69).test()
 
         testObserver.assertComplete()
         val values = testObserver.values()
@@ -81,7 +81,8 @@ class FlatMapExamplesTest {
 
     @Test
     fun flatMapOneToSometimes() {
-        val testObserver = mSut!!.flatMapOneToSometimes(0, 1, 2, 3, 4, 5).test()
+        val list = listOf(0, 1, 2, 3, 4, 5)
+        val testObserver = mSut!!.flatMapOneToSometimes(list).test()
 
         testObserver.assertComplete()
         testObserver.assertValues(1, 3, 5)
@@ -91,7 +92,8 @@ class FlatMapExamplesTest {
 
     @Test
     fun singleFlatMapObservable() {
-        val testObserver = mSut!!.singleFlatMapObservable(1, 2, 3, 4).test()
+        val list = listOf(1, 2, 3, 4)
+        val testObserver = mSut!!.singleFlatMapObservable(list).test()
 
         testObserver.assertValues(1, 2, 3, 4)
 
