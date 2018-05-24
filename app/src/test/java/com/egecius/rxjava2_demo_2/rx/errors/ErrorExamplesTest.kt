@@ -11,7 +11,7 @@ import org.junit.Test
 
 class ErrorExamplesTest {
 
-    private fun setCrashingUncaughtExceptionHandler() {
+    private fun setUncaughtExceptionHandlerAsStrict() {
         Thread.currentThread().setUncaughtExceptionHandler({ _, throwable ->
             throw IllegalStateException(throwable)
         })
@@ -23,13 +23,13 @@ class ErrorExamplesTest {
     // What happens is:
     // 1) exception is wrapped in OnErrorNotImplementedException and printed at the end of
     // 2) RxJavaPlugins.onError()
-    // 3) passed to UncaughtExceptionHandler interface
+    // 3) passed to UncaughtExceptionHandler
     // 4) which passes exception to current thread's UncaughtExceptionHandler. On desktop it
     // does not crash app but on Android it does
 
     @Test(expected = RuntimeException::class)
     fun Observable_Error() {
-        setCrashingUncaughtExceptionHandler()
+        setUncaughtExceptionHandlerAsStrict()
 
         val observable = Observable.error<Any>(RuntimeException())
 
@@ -43,7 +43,7 @@ class ErrorExamplesTest {
 
     @Test
     fun Observable_Error_doesNotFailWhenOnErrorImplemented() {
-        setCrashingUncaughtExceptionHandler()
+        setUncaughtExceptionHandlerAsStrict()
 
         val observable = Observable.error<Any>(RuntimeException())
 
@@ -60,7 +60,7 @@ class ErrorExamplesTest {
 
     @Test(expected = RuntimeException::class)
     fun Single_Error() {
-        setCrashingUncaughtExceptionHandler()
+        setUncaughtExceptionHandlerAsStrict()
 
         val single = Single.error<Any>(RuntimeException())
 
@@ -75,7 +75,7 @@ class ErrorExamplesTest {
 
     @Test(expected = RuntimeException::class)
     fun Completable_Error() {
-        setCrashingUncaughtExceptionHandler()
+        setUncaughtExceptionHandlerAsStrict()
 
         val completable = Completable.error(RuntimeException())
 
@@ -89,7 +89,7 @@ class ErrorExamplesTest {
 
     @Test(expected = RuntimeException::class)
     fun Maybe_Error() {
-        setCrashingUncaughtExceptionHandler()
+        setUncaughtExceptionHandlerAsStrict()
 
         val maybe = Maybe.error<Any>(RuntimeException())
 
