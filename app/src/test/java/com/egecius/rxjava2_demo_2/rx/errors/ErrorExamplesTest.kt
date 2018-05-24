@@ -1,5 +1,8 @@
+@file:Suppress("UNUSED_ANONYMOUS_PARAMETER")
+
 package com.egecius.rxjava2_demo_2.rx.errors
 
+import com.egecius.rxjava2_demo_2.rx.EgisException
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import io.reactivex.Observable
@@ -102,6 +105,32 @@ class ErrorExamplesTest {
         })
 
         // if execution has not failed by this point, test has passed
+    }
+
+    @Test
+    fun `does not crash when onError implemented`() {
+        setUncaughtExceptionHandlerAsStrict()
+
+        val observable = Observable.error<Any>(RuntimeException())
+
+        observable.subscribe({ emission ->
+
+        }, { throwable ->
+            //            throw EgisException()
+        })
+    }
+
+    @Test(expected = IllegalStateException::class)
+    fun `crashes when onError implementation throws exception`() {
+        setUncaughtExceptionHandlerAsStrict()
+
+        val observable = Observable.error<Any>(RuntimeException())
+
+        observable.subscribe({ emission ->
+
+        }, { throwable ->
+            throw EgisException()
+        })
     }
 
 }
