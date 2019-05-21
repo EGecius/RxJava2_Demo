@@ -4,5 +4,5 @@ import io.reactivex.Observable
 
 interface Repo {
 
-    fun getUsers() : Observable<User>
+    fun getUsers(): Observable<List<User>>
 }
