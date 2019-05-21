@@ -18,8 +18,8 @@ class CombinedRepoTest {
     @Mock
     lateinit var networkRepo: NetworkRepo
 
-    private val persistenceUsers = listOf(User("persistence1"), User("persistence2"))
-    private val networkUsers = listOf(User("network1"), User("network2"))
+    private val usersPersistence = listOf(User("persistence1"), User("persistence2"))
+    private val usersNetwork = listOf(User("network1"), User("network2"))
 
     @Before
     fun setUp() {
@@ -33,11 +33,11 @@ class CombinedRepoTest {
 
         val testObserver = sut.getUsers().test()
 
-        testObserver.assertResult(persistenceUsers)
+        testObserver.assertResult(usersPersistence)
     }
 
     private fun givenPersistenceReturnsData() {
-        given(persistenceRepo.getUsers()).willReturn(Observable.just(persistenceUsers))
+        given(persistenceRepo.getUsers()).willReturn(Observable.just(usersPersistence))
     }
 
     private fun givenNetworkReturnNothing() {
@@ -51,7 +51,7 @@ class CombinedRepoTest {
 
         val testObserver = sut.getUsers().test()
 
-        testObserver.assertResult(networkUsers)
+        testObserver.assertResult(usersNetwork)
     }
 
     private fun givenPersistenceReturnsNothing() {
@@ -59,7 +59,7 @@ class CombinedRepoTest {
     }
 
     private fun giveNetworkReturnData() {
-        given(networkRepo.getUsers()).willReturn(Observable.just(networkUsers))
+        given(networkRepo.getUsers()).willReturn(Observable.just(usersNetwork))
     }
 
     @Test
@@ -70,6 +70,16 @@ class CombinedRepoTest {
         val testObserver = sut.getUsers().test()
 
         testObserver.assertNoValues().assertComplete()
+    }
+
+    @Test
+    fun `when data available from both, first returns from cache and then from network`() {
+        givenPersistenceReturnsData()
+        giveNetworkReturnData()
+
+        val testObserver = sut.getUsers().test()
+
+        testObserver.assertResult(usersPersistence, usersNetwork)
     }
 
 }
