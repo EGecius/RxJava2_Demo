@@ -1,7 +1,7 @@
 package com.egecius.rxjava2_demo_2
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 
 
 class MainActivity : AppCompatActivity() {
