@@ -6,6 +6,7 @@ class CombinedRepo(private val networkRepo: NetworkRepo,
                    private val persistenceRepo: PersistenceRepo) : Repo {
 
     override fun getUsers(): Observable<List<User>> {
-        return Observable.concat(persistenceRepo.getUsers(), networkRepo.getUsers())
+        return Observable.concat(persistenceRepo.getUsers(),
+                networkRepo.getUsers())
     }
 }
